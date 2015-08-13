@@ -1,0 +1,24 @@
+# TO BUILD STATIC BOX
+
+Box, I define this like a box.
+In daily work, static page develop cost lots of time,
+only cause it's need a lot of repeat action, like paste, copy and so on.
+
+This repeat action, the tech-back-end can fix it well.
+Here, I use Nodejs to complete thie part.
+
+But another question is coming.
+How to rebuild web view page?
+Just like the tag <link>, <script> and even the <html>, <body>, <div>,
+all of the html tag.
+
+Maybe the way start can be this.
+First, A javascript manager, it is can does something as the local config.
+Second, anonymous function manager which can manage golbal and local function to
+avoid variable conflict.
+
+# Here is the first part.
+
+1.build javascript manager
+--1.1 get local config.
+--1.2 anonymous manager
