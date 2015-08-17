@@ -22,3 +22,21 @@ avoid variable conflict.
 1.build javascript manager
 --1.1 get local config.
 --1.2 anonymous manager
+
+Charpter 1
+--1.1
+  How to get local config?
+  (function(){
+    ...doSomething...
+  }();
+  In this code, it will run at now in javascript, so we take this.
+  
+  We need the absolute path of local config, so get all script node in document
+  it's necessary. 
+  At first, get all script node and filter node, get the name 'local' or
+  other custom config base name.
+
+  So this base model when the local.js running is that take a 
+  functin (fn(){...})() in this code we get a absolute path of config file.
+
+

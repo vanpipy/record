@@ -7,5 +7,8 @@
 # But E need some help...
 
 import os
+import sys
+
+print os.getcwd()
 
 
