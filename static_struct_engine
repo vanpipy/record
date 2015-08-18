@@ -20,7 +20,7 @@ avoid variable conflict.
 # Here is the first part.
 
 1.build javascript manager
---1.1 get local config.
+--1.1 get local config. (foolish completed)
 --1.2 anonymous manager
 
 Charpter 1
@@ -38,5 +38,8 @@ Charpter 1
 
   So this base model when the local.js running is that take a 
   functin (fn(){...})() in this code we get a absolute path of config file.
+
+  Absolute path is't necessary, how to combine base path with module is a problem.
+  Especially a custom base path given.
 
 

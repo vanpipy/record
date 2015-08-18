@@ -1,13 +1,40 @@
 var define, require, local;
 (function(global){
-  var define, require;
+  var head = document.head,
+      context = {};
 
-  var req = require = function(url){
-    return url;
+  local = function(deps){
+    return context.require(local.deps);
   };
 
-  function define(ary, fn){
-    fn.apply(global, [require]);
+  local.config = function(config){
+    //return local(config);
+  };
+
+  local.deps = [];
+
+  local.createNode = function(){
+    var node = document.createElement("script");
+    node.type = "text/javascript";
+    node.charset = "utf-8";
+    node.async = true;
+    
+    return node;
+  };
+
+  local.load = function(url){
+    var node = local.createNode();
+    node.src = url;
+
+    return head.appendChild(node);
+  };
+
+  context.require = function(deps){
+    _.eachAry(deps, function(i, elem){
+      if (typeof elem == "string"){
+        local.load(elem);
+      }
+    });
   };
 
   function getScript(){
@@ -26,9 +53,19 @@ var define, require, local;
   //Filter the scripts node and get local config.
   _.eachAry(getScript(), function(i, elem){
     if (elem.getAttribute("local")){
-      var _local = elem.getAttribute("local");
-      console.log(_local);
+      var localScript = elem.getAttribute("local");
+      
+      var src = localScript.split("/");
+      var scriptName = src.pop();
+      src.length ? scriptName = src.join("/") + "/" + scriptName : scriptName = "./" + scriptName ;
+
+      local.deps.push(scriptName);
     };
   });
 
+  context.require(local.deps);
+
+  define = function(){
+    fn.apply(global);
+  };
 })(this);

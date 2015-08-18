@@ -1,9 +1,3 @@
-define(
-  [
-    // What's this?
-    ''
-  ], 
-  function(require, exports, module){
-
-  }
-);
+local.config({
+  'baseUrl': 'lib'
+});
