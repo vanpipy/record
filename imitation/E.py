@@ -9,6 +9,10 @@
 import os
 import sys
 
-print os.getcwd()
+where = os.getcwd()
 
+newName = raw_input("Could you give me a new name? :): ")
 
+handler = open(newName, 'w');
+handler.write(newName)
+handler.close();
