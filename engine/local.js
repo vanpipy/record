@@ -2,6 +2,7 @@ var define, require, local;
 (function(global){
   var deps = [], config = {};
   var root = document, head = root.head;
+  var shift = Array.prototype.shift;
 
   function creatNode(){
     var node = root.creatElement("script");
@@ -30,14 +31,12 @@ var define, require, local;
     return null;
   }
 
-  function eachAry(ary, fn){
-    
+  function each(callback){
+
   };
 
-  function curry(x){
-    return function(y){
-      return x + y;
-    };
+  function err(word){
+    throw new Error(word);
   };
 
 })(this);
