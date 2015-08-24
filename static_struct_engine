@@ -42,4 +42,17 @@ Charpter 1
   Absolute path is't necessary, how to combine base path with module is a problem.
   Especially a custom base path given.
 
+--1.2
+  What anonymous function in javascript?
+  function(.){...} it's like a function but no function name.
+  In javascript, we can call anonymous function as callback function, cause we use
+  it when something action happend.
 
+  But how can I manage my anonymous function in javascript, it's anonymous, no name,
+  no place for us to get it.
+
+  So a good data struct for anonymous and we can use this struct to manage our
+  callback function package.
+
+  [fnA, fnB, fnC, ..., fnN]
+  Use Array struct, it's useful and easy to modify content.
