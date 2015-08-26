@@ -56,3 +56,7 @@ Charpter 1
 
   [fnA, fnB, fnC, ..., fnN]
   Use Array struct, it's useful and easy to modify content.
+
+  function anonymous manager is not only a function, it has own stack to store
+  index, manage stack through index. At the beginning, there is common api for
+  storing function into stack.
