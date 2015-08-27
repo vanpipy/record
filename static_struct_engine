@@ -60,3 +60,6 @@ Charpter 1
   From A[key] --> get the key mapping A' and locate the function in A'[key].
   And name N to fnN place not function name, and offer a way to get fnN.
 
+  function anonymous manager is not only a function, it has own stack to store
+  index, manage stack through index. At the beginning, there is common api for
+  storing function into stack.

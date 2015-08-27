@@ -65,10 +65,6 @@ var define, require, local;
   };
 
   function anonyer(deps, fns){
-    var A = isAry(deps) ? deps : [],
-        B = isAry(fns) ? fns : [];
-
-
 
     return void 0;
   };
