@@ -65,9 +65,12 @@ var define, require, local;
   };
 
   function anonyer(deps, fns){
-    if (!isAry(deps)){
+    var A = isAry(deps) ? deps : [],
+        B = isAry(fns) ? fns : [];
 
-    }
+
+
+    return void 0;
   };
 
   /* Get first script's config location from custom name local */

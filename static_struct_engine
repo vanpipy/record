@@ -54,5 +54,9 @@ Charpter 1
   So a good data struct for anonymous and we can use this struct to manage our
   callback function package.
 
-  [fnA, fnB, fnC, ..., fnN]
+  Array A : [A, B, C, ..., N] --> Array A' : [fnA, fnB, fnC, ..., fnN]
   Use Array struct, it's useful and easy to modify content.
+
+  From A[key] --> get the key mapping A' and locate the function in A'[key].
+  And name N to fnN place not function name, and offer a way to get fnN.
+
