@@ -44,10 +44,6 @@ var define, require, local;
     }
   };
 
-  function scriptNode(url){
-    scriptCreater.load(url);
-  };
-
   function isType(type){
     return function(x){
       return tostring.call(x) == "[object "+ type +"]";
@@ -65,7 +61,7 @@ var define, require, local;
   };
 
   function anonyer(deps, fns){
-
+    if (!isAry(deps)){ deps = [] };
     return void 0;
   };
 
@@ -73,7 +69,7 @@ var define, require, local;
   eachAry(root.scripts, function(elem, i){
     if (elem.getAttribute("local")){
       var local = elem.getAttribute("local");
-      scriptNode(local);
+      scriptCreater.load(local);
     }
   });
 
