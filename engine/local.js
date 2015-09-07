@@ -1,6 +1,6 @@
 var define, require, local;
 (function(global){
-  var deps = [], config = {},
+  var deps = [], config = {};
 
   var root = document,
       head = root.head;
@@ -15,17 +15,17 @@ var define, require, local;
 
   var scriptCreater = {
     load: function(url){
-      this.node = this.create();
       this.url = url;
-      this.append().watch();
+      this.create().append().watch();
     },
     create: function(){
       var node = root.createElement("script");
       node.type = "text/javascript";
       node.charset = "utf-8";
       node.async = "async";
+      this.node = node;
 
-      return node;
+      return this;
     },
     watch: function(){
       var _this = this, node = this.node;
@@ -61,9 +61,41 @@ var define, require, local;
   };
 
   function anonyer(deps, fns){
-    if (!isAry(deps)){ deps = [] };
-    return void 0;
+    var _deps = isAry(deps) ? deps : [],
+        _fns = isAry(fns) ? fns : [];
+    var _concat = Array.prototype.concat;
+
+    function _add(){
+      this.deps = _deps;
+      this.fns = _fns;
+
+      _concat.apply(this.deps, arguments);
+      _concat.apply(this.fns, arguments);
+
+      this.target = this.fns[this.fns.length - 1];
+
+      return this;
+    };
+
+    function _remove(){
+
+    };
+
+    function _run(){
+      this.target.call(this);
+    };
+
+    return {
+      add: _add,
+      remove : _remove,
+      run: _run
+    }
   };
+
+  var _a = anonyer(["a"] , [function(){console.log("a")}]);
+  _a.add("b", function(){
+    console.log(123)
+  }).run();
 
   /* Get first script's config location from custom name local */
   eachAry(root.scripts, function(elem, i){
