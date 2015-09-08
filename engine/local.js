@@ -63,8 +63,9 @@ var define, require, local;
   function anonyer(deps, fns){
     var _deps = isAry(deps) ? deps : [],
         _fns = isAry(fns) ? fns : [];
-    var _concat = Array.prototype.concat;
+    var concat = Array.prototype.concat;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
     function _add(){
       this.deps = _deps;
@@ -92,6 +93,13 @@ var define, require, local;
 >>>>>>> 18574bc... Test st && add new url with ibm.
 
       this.target = this.fns[this.fns.length - 1];
+=======
+    function _add(a, b){
+      _deps = concat.apply(_deps, isAry(a) ? a : [a]);
+      _fns = concat.apply(_fns, isAry(b) ? b : [b]);
+
+      this.target = b;
+>>>>>>> a1dbda7... Modify the anonymous manage.
 
       return this;
     };
