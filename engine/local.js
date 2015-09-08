@@ -65,9 +65,20 @@ var define, require, local;
         _fns = isAry(fns) ? fns : [];
     var _concat = Array.prototype.concat;
 
+<<<<<<< HEAD
     function _add(){
       this.deps = _deps;
       this.fns = _fns;
+=======
+    function _add(a, b){
+<<<<<<< HEAD
+      this.deps = _deps = concat.apply(_deps, isAry(a) ? a : [a]);
+      this.fns = _fns = concat.apply(_fns, isAry(b) ? b : [b]);
+=======
+      _deps = concat.apply(_deps, isAry(a) ? a : [a]);
+      _fns = concat.apply(_fns, isAry(b) ? b : [b]);
+>>>>>>> cd2acff... Modify the anonymous manage.
+>>>>>>> 5202515... Modify the anonymous manage.
 
       _concat.apply(this.deps, arguments);
       _concat.apply(this.fns, arguments);
