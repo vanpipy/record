@@ -63,16 +63,13 @@ var define, require, local;
   function anonyer(deps, fns){
     var _deps = isAry(deps) ? deps : [],
         _fns = isAry(fns) ? fns : [];
-    var _concat = Array.prototype.concat;
+    var concat = Array.prototype.concat;
 
-    function _add(){
-      this.deps = _deps;
-      this.fns = _fns;
+    function _add(a, b){
+      _deps = concat.apply(_deps, isAry(a) ? a : [a]);
+      _fns = concat.apply(_fns, isAry(b) ? b : [b]);
 
-      _concat.apply(this.deps, arguments);
-      _concat.apply(this.fns, arguments);
-
-      this.target = this.fns[this.fns.length - 1];
+      this.target = b;
 
       return this;
     };
