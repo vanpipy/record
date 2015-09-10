@@ -66,8 +66,8 @@ var define, require, local;
     var concat = Array.prototype.concat;
 
     function _add(a, b){
-      _deps = concat.apply(_deps, isAry(a) ? a : [a]);
-      _fns = concat.apply(_fns, isAry(b) ? b : [b]);
+      this.deps = _deps = concat.apply(_deps, isAry(a) ? a : [a]);
+      this.fns = _fns = concat.apply(_fns, isAry(b) ? b : [b]);
 
       this.target = b;
 
@@ -79,10 +79,12 @@ var define, require, local;
     };
 
     function _run(){
-      this.target.call(this);
+      this.target.apply(this, arguments);
     };
 
     return {
+      deps: _deps,
+      fns: _fns,
       add: _add,
       remove : _remove,
       run: _run
@@ -90,8 +92,11 @@ var define, require, local;
   };
 
   var _a = anonyer(["a"] , [function(){console.log("a")}]);
-  _a.add("b", function(){
-    console.log(123)
+  _a.add("b", function(k, f){
+    console.log(k, f, this)
+  }).run("kkk", "fff");
+  _a.add("c", function(){
+    console.log("c", this)
   }).run();
 
   /* Get first script's config location from custom name local */
