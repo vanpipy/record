@@ -72,16 +72,24 @@ var define, require, local;
 =======
     function _add(a, b){
 <<<<<<< HEAD
+<<<<<<< HEAD
       this.deps = _deps = concat.apply(_deps, isAry(a) ? a : [a]);
       this.fns = _fns = concat.apply(_fns, isAry(b) ? b : [b]);
 =======
       _deps = concat.apply(_deps, isAry(a) ? a : [a]);
       _fns = concat.apply(_fns, isAry(b) ? b : [b]);
 >>>>>>> cd2acff... Modify the anonymous manage.
+<<<<<<< HEAD
 >>>>>>> 5202515... Modify the anonymous manage.
 
       _concat.apply(this.deps, arguments);
       _concat.apply(this.fns, arguments);
+=======
+=======
+      this.deps = _deps = concat.apply(_deps, isAry(a) ? a : [a]);
+      this.fns = _fns = concat.apply(_fns, isAry(b) ? b : [b]);
+>>>>>>> 25e24f2... Test st && add new url with ibm.
+>>>>>>> 18574bc... Test st && add new url with ibm.
 
       this.target = this.fns[this.fns.length - 1];
 
