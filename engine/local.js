@@ -63,16 +63,13 @@ var define, require, local;
   function anonyer(deps, fns){
     var _deps = isAry(deps) ? deps : [],
         _fns = isAry(fns) ? fns : [];
-    var _concat = Array.prototype.concat;
+    var concat = Array.prototype.concat;
 
-    function _add(){
-      this.deps = _deps;
-      this.fns = _fns;
+    function _add(a, b){
+      this.deps = _deps = concat.apply(_deps, isAry(a) ? a : [a]);
+      this.fns = _fns = concat.apply(_fns, isAry(b) ? b : [b]);
 
-      _concat.apply(this.deps, arguments);
-      _concat.apply(this.fns, arguments);
-
-      this.target = this.fns[this.fns.length - 1];
+      this.target = b;
 
       return this;
     };
@@ -82,10 +79,12 @@ var define, require, local;
     };
 
     function _run(){
-      this.target.call(this);
+      this.target.apply(this, arguments);
     };
 
     return {
+      deps: _deps,
+      fns: _fns,
       add: _add,
       remove : _remove,
       run: _run
@@ -93,8 +92,11 @@ var define, require, local;
   };
 
   var _a = anonyer(["a"] , [function(){console.log("a")}]);
-  _a.add("b", function(){
-    console.log(123)
+  _a.add("b", function(k, f){
+    console.log(k, f, this)
+  }).run("kkk", "fff");
+  _a.add("c", function(){
+    console.log("c", this)
   }).run();
 
   /* Get first script's config location from custom name local */
