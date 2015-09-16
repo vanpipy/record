@@ -56,15 +56,23 @@ var define, require, local;
     for (var i = 0, l = ary.length;i < l;i++){fn(ary[i], i)};
   };
 
+  function eachObj(obj, fn){
+    for (var each in obj){fn(obj[each], each)};
+  }
+
   function err(word){
     throw new Error(word);
   };
 
+  /*
+   * @param -->['a', 'b'], [funA, funB]
+   * @return -->{key : value...}
+   */
   function anonyer(deps, fns){
-    var _deps = isAry(deps) ? deps : [],
-        _fns = isAry(fns) ? fns : [];
-    var concat = Array.prototype.concat;
+    var _unit = {};
+    var _come_in;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     function _add(){
@@ -100,16 +108,49 @@ var define, require, local;
 
       this.target = b;
 >>>>>>> a1dbda7... Modify the anonymous manage.
+=======
+    _add(deps, fns);
 
-      return this;
+    function _add(key, value){
+      var _k = [].concat(key),
+          _v = [].concat(value);
+>>>>>>> 13c6fdb... Finish first step with anonymous manager.
+
+      _modify(_k, _v);
     };
 
-    function _remove(){
+    function _remove(key){
+      var _keys = [].concat(!key ? _come_in : key);
+      var cache = {};
 
+      eachAry(_keys, function(elem, i){
+        _unit[_keys[i]] = undefined;
+      });
+
+      eachObj(_unit, function(v, k){
+        if (!!_unit[k]){
+          cache[k] = _unit[k];
+        }
+      });
+
+      return _unit = cache;
     };
 
+<<<<<<< HEAD
     function _run(){
       this.target.call(this);
+=======
+    function _run(key){
+      _unit[key].call(global);
+    };
+
+    function _modify(deps, fns){
+      _come_in = deps;
+
+      eachAry(deps, function(elem, i){
+        _unit[deps[i]] = fns[i];
+      });
+>>>>>>> 13c6fdb... Finish first step with anonymous manager.
     };
 
     return {
@@ -119,10 +160,19 @@ var define, require, local;
     }
   };
 
+<<<<<<< HEAD
   var _a = anonyer(["a"] , [function(){console.log("a")}]);
   _a.add("b", function(){
     console.log(123)
   }).run();
+=======
+  var _a = new anonyer(["a"] , [function(){console.log("a")}]);
+  _a.add("b", function(){
+    console.log(this)
+  });
+
+  _a.run('a');
+>>>>>>> 13c6fdb... Finish first step with anonymous manager.
 
   /* Get first script's config location from custom name local */
   eachAry(root.scripts, function(elem, i){
