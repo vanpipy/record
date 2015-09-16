@@ -56,48 +56,73 @@ var define, require, local;
     for (var i = 0, l = ary.length;i < l;i++){fn(ary[i], i)};
   };
 
+  function eachObj(obj, fn){
+    for (var each in obj){fn(obj[each], each)};
+  }
+
   function err(word){
     throw new Error(word);
   };
 
+  /*
+   * @param -->['a', 'b'], [funA, funB]
+   * @return -->{key : value...}
+   */
   function anonyer(deps, fns){
-    var _deps = isAry(deps) ? deps : [],
-        _fns = isAry(fns) ? fns : [];
-    var concat = Array.prototype.concat;
+    var _unit = {};
+    var _come_in;
 
-    function _add(a, b){
-      this.deps = _deps = concat.apply(_deps, isAry(a) ? a : [a]);
-      this.fns = _fns = concat.apply(_fns, isAry(b) ? b : [b]);
+    _add(deps, fns);
 
-      this.target = b;
+    function _add(key, value){
+      var _k = [].concat(key),
+          _v = [].concat(value);
 
-      return this;
+      _modify(_k, _v);
     };
 
-    function _remove(){
+    function _remove(key){
+      var _keys = [].concat(!key ? _come_in : key);
+      var cache = {};
 
+      eachAry(_keys, function(elem, i){
+        _unit[_keys[i]] = undefined;
+      });
+
+      eachObj(_unit, function(v, k){
+        if (!!_unit[k]){
+          cache[k] = _unit[k];
+        }
+      });
+
+      return _unit = cache;
     };
 
-    function _run(){
-      this.target.apply(this, arguments);
+    function _run(key){
+      _unit[key].call(global);
+    };
+
+    function _modify(deps, fns){
+      _come_in = deps;
+
+      eachAry(deps, function(elem, i){
+        _unit[deps[i]] = fns[i];
+      });
     };
 
     return {
-      deps: _deps,
-      fns: _fns,
       add: _add,
       remove : _remove,
       run: _run
     }
   };
 
-  var _a = anonyer(["a"] , [function(){console.log("a")}]);
-  _a.add("b", function(k, f){
-    console.log(k, f, this)
-  }).run("kkk", "fff");
-  _a.add("c", function(){
-    console.log("c", this)
-  }).run();
+  var _a = new anonyer(["a"] , [function(){console.log("a")}]);
+  _a.add("b", function(){
+    console.log(this)
+  });
+
+  _a.run('a');
 
   /* Get first script's config location from custom name local */
   eachAry(root.scripts, function(elem, i){
