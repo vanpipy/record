@@ -72,49 +72,11 @@ var define, require, local;
     var _unit = {};
     var _come_in;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    function _add(){
-      this.deps = _deps;
-      this.fns = _fns;
-=======
-    function _add(a, b){
-<<<<<<< HEAD
-<<<<<<< HEAD
-      this.deps = _deps = concat.apply(_deps, isAry(a) ? a : [a]);
-      this.fns = _fns = concat.apply(_fns, isAry(b) ? b : [b]);
-=======
-      _deps = concat.apply(_deps, isAry(a) ? a : [a]);
-      _fns = concat.apply(_fns, isAry(b) ? b : [b]);
->>>>>>> cd2acff... Modify the anonymous manage.
-<<<<<<< HEAD
->>>>>>> 5202515... Modify the anonymous manage.
-
-      _concat.apply(this.deps, arguments);
-      _concat.apply(this.fns, arguments);
-=======
-=======
-      this.deps = _deps = concat.apply(_deps, isAry(a) ? a : [a]);
-      this.fns = _fns = concat.apply(_fns, isAry(b) ? b : [b]);
->>>>>>> 25e24f2... Test st && add new url with ibm.
->>>>>>> 18574bc... Test st && add new url with ibm.
-
-      this.target = this.fns[this.fns.length - 1];
-=======
-    function _add(a, b){
-      _deps = concat.apply(_deps, isAry(a) ? a : [a]);
-      _fns = concat.apply(_fns, isAry(b) ? b : [b]);
-
-      this.target = b;
->>>>>>> a1dbda7... Modify the anonymous manage.
-=======
     _add(deps, fns);
 
     function _add(key, value){
       var _k = [].concat(key),
           _v = [].concat(value);
->>>>>>> 13c6fdb... Finish first step with anonymous manager.
 
       _modify(_k, _v);
     };
@@ -136,12 +98,18 @@ var define, require, local;
       return _unit = cache;
     };
 
-<<<<<<< HEAD
     function _run(){
-      this.target.call(this);
-=======
-    function _run(key){
-      _unit[key].call(global);
+      eachAry(_keys, function(elem, i){
+        _unit[_keys[i]] = undefined;
+      });
+
+      eachObj(_unit, function(v, k){
+        if (!!_unit[k]){
+          cache[k] = _unit[k];
+        }
+      });
+
+      return _unit = cache;
     };
 
     function _modify(deps, fns){
@@ -150,7 +118,6 @@ var define, require, local;
       eachAry(deps, function(elem, i){
         _unit[deps[i]] = fns[i];
       });
->>>>>>> 13c6fdb... Finish first step with anonymous manager.
     };
 
     return {
@@ -160,19 +127,12 @@ var define, require, local;
     }
   };
 
-<<<<<<< HEAD
   var _a = anonyer(["a"] , [function(){console.log("a")}]);
   _a.add("b", function(){
     console.log(123)
   }).run();
-=======
-  var _a = new anonyer(["a"] , [function(){console.log("a")}]);
-  _a.add("b", function(){
-    console.log(this)
-  });
 
   _a.run('a');
->>>>>>> 13c6fdb... Finish first step with anonymous manager.
 
   /* Get first script's config location from custom name local */
   eachAry(root.scripts, function(elem, i){
