@@ -13,6 +13,7 @@ var define, require, local;
   var regPro = /^([http|https]\:\/\/)/,
       regUrl = /[\d\w\-\_]+\//g;
 
+/*
   var scriptCreater = {
     load: function(url){
       this.url = url;
@@ -43,6 +44,40 @@ var define, require, local;
       return this;
     }
   };
+*/
+
+  function scriptCreater(deps){
+    //isAry(deps) || err("deps must be an array!");
+
+    var _creater = {
+      loader: function(url){
+        this.url = url;
+        this.createNode().appendNode();
+      },
+      createNode: templateFn(function(){
+        this.node = root.createElement("script");
+        this.node.type = "text/javascript";
+        this.node.charset = "utf-8";
+        this.node.async = "async";
+        this.node.src = this.url;
+      }),
+      appendNode: templateFn(function(){
+        head.appendChild(this.node);
+      })
+    };
+
+    eachAry(deps, function(elem){
+      _creater.loader(elem);
+    });
+
+    function templateFn(fn){
+      return function(){
+        fn.call(this);
+
+        return this;
+      }
+    }
+  };
 
   function isType(type){
     return function(x){
@@ -64,72 +99,43 @@ var define, require, local;
     throw new Error(word);
   };
 
+  local = {
+
+  };
+
   /*
-   * @param -->['a', 'b'], [funA, funB]
-   * @return -->{key : value...}
+   * Only operate an array.
    */
-  function anonyer(deps, fns){
-    var _unit = {};
+  function anonyer(){
     var _come_in;
 
-    _add(deps, fns);
-
-    function _add(key, value){
-      var _k = [].concat(key),
-          _v = [].concat(value);
-
-      _modify(_k, _v);
+    function _add(key){
+      return _come_in = [].concat(key);
     };
 
-    function _remove(key){
-      var _keys = [].concat(!key ? _come_in : key);
-      var cache = {};
-
-      eachAry(_keys, function(elem, i){
-        _unit[_keys[i]] = undefined;
-      });
-
-      eachObj(_unit, function(v, k){
-        if (!!_unit[k]){
-          cache[k] = _unit[k];
-        }
-      });
-
-      return _unit = cache;
-    };
-
-    function _run(key){
-      _unit[key].call(global);
-    };
-
-    function _modify(deps, fns){
-      _come_in = deps;
-
-      eachAry(deps, function(elem, i){
-        _unit[deps[i]] = fns[i];
-      });
-    };
+    function _run(fn){
+      fn.call(this, _come_in);
+    }
 
     return {
+      check: function(){
+        console.log(_come_in);
+      },
       add: _add,
-      remove : _remove,
       run: _run
     }
   };
 
-  var _a = new anonyer(["a"] , [function(){console.log("a")}]);
-  _a.add("b", function(){
-    console.log(this)
-  });
-
-  _a.run('a');
+  var _deps = anonyer();
 
   /* Get first script's config location from custom name local */
   eachAry(root.scripts, function(elem, i){
     if (elem.getAttribute("local")){
-      var local = elem.getAttribute("local");
-      scriptCreater.load(local);
+      var path = elem.getAttribute("local");
+      _deps.add(path);
     }
   });
+
+  _deps.run(scriptCreater);
 
 })(this);
