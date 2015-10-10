@@ -11,7 +11,10 @@ var define, require, local;
       tostring = op.toString;
 
   var regPro = /^([http|https]\:\/\/)/,
-      regUrl = /[\d\w\-\_]+\//g;
+      regUrl = /[\d\w\-\_]+\//g,
+      regSys = /\//g;
+
+  var config = {};
 
 /*
   var scriptCreater = {
@@ -70,6 +73,12 @@ var define, require, local;
       _creater.loader(elem);
     });
 
+    function join(rootPath, sourcePath){
+      var rpath = rootPath.split(regSys);
+      var spath = sourcePath.split(regSys);
+
+    };
+
     function templateFn(fn){
       return function(){
         fn.call(this);
@@ -100,7 +109,15 @@ var define, require, local;
   };
 
   local = {
+    config: function(cfg){
+      var reserve = ['baseUrl', 'paths'];
 
+      for (var each in cfg){
+        if (reserve.indexOf(each) >= 0){
+          config[each] = cfg[each];
+        };
+      };
+    }
   };
 
   /*

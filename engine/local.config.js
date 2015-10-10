@@ -1,3 +1,6 @@
 local.config({
-  'baseUrl': 'lib'
+  baseUrl: "./",
+  paths: {
+    'demo': 'compo/demo.js'
+  }
 });
