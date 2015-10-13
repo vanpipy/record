@@ -76,8 +76,10 @@ Charpter 1
 --1.3
   What's a config in javascript and how it works? It's the two important questions
   before we start code the local.config function.
-  Give me a sleep first...
 
+  config function is just like a variable manager, so I can set something reverse 
+  key words, 'baseUrl' or 'paths', and join the variable to source path when I use
+  it.
 
 After && Before
   This word appear early, like I write in the future. Because it's about Emily.

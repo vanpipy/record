@@ -15,6 +15,50 @@ var define, require, local;
       regSys = /\//g;
 
   var config = {};
+  var reserve = ['baseUrl', 'paths'];
+
+  function isType(type){
+    return function(x){
+      return tostring.call(x) == "[object "+ type +"]";
+    };
+  };
+
+  var isAry = isType("Array");
+
+  function eachAry(ary, fn){
+    for (var i = 0, l = ary.length;i < l;i++){fn(ary[i], i)};
+  };
+
+  function eachObj(obj, fn){
+    for (var each in obj){fn(obj[each], each)};
+  }
+
+  function err(word){
+    throw new Error(word);
+  };
+
+  /*
+   * Only operate an array.
+   */
+  function anonyer(){
+    var _come_in;
+
+    function _add(key){
+      return _come_in = [].concat(key);
+    };
+
+    function _run(fn){
+      fn.call(this, _come_in);
+    }
+
+    return {
+      check: function(){
+        console.log(_come_in);
+      },
+      add: _add,
+      run: _run
+    }
+  };
 
 /*
   var scriptCreater = {
@@ -70,13 +114,25 @@ var define, require, local;
     };
 
     eachAry(deps, function(elem){
-      _creater.loader(elem);
+      _creater.loader(join(elem));
     });
 
-    function join(rootPath, sourcePath){
-      var rpath = rootPath.split(regSys);
+    function join(sourcePath){
+      var url;
       var spath = sourcePath.split(regSys);
-
+      
+      if (!config['baseUrl']){
+        url = spath.join('/');
+      }else {
+        if (spath[0] === '.'){
+          spath[0] = config['baseUrl'];
+        }else {
+          spath.unshift(config['baseUrl']);
+        };
+        url = spath.join('/');
+      };
+      console.log(config)
+      return url;
     };
 
     function templateFn(fn){
@@ -88,58 +144,18 @@ var define, require, local;
     }
   };
 
-  function isType(type){
-    return function(x){
-      return tostring.call(x) == "[object "+ type +"]";
-    };
-  };
-
-  var isAry = isType("Array");
-
-  function eachAry(ary, fn){
-    for (var i = 0, l = ary.length;i < l;i++){fn(ary[i], i)};
-  };
-
-  function eachObj(obj, fn){
-    for (var each in obj){fn(obj[each], each)};
-  }
-
-  function err(word){
-    throw new Error(word);
-  };
-
   local = {
     config: function(cfg){
-      var reserve = ['baseUrl', 'paths'];
-
       for (var each in cfg){
         if (reserve.indexOf(each) >= 0){
           config[each] = cfg[each];
         };
       };
-    }
-  };
 
-  /*
-   * Only operate an array.
-   */
-  function anonyer(){
-    var _come_in;
-
-    function _add(key){
-      return _come_in = [].concat(key);
-    };
-
-    function _run(fn){
-      fn.call(this, _come_in);
-    }
-
-    return {
-      check: function(){
-        console.log(_come_in);
-      },
-      add: _add,
-      run: _run
+      /*
+       * Set config && Load all source needed.
+       * But how can I do this?
+       */
     }
   };
 
@@ -148,11 +164,10 @@ var define, require, local;
   /* Get first script's config location from custom name local */
   eachAry(root.scripts, function(elem, i){
     if (elem.getAttribute("local")){
-      var path = elem.getAttribute("local");
-      _deps.add(path);
+      _deps.add(elem.getAttribute("local"));
     }
   });
 
-  _deps.run(scriptCreater);
+  //_deps.run(scriptCreater);
 
 })(this);
