@@ -114,26 +114,9 @@ var define, require, local;
     };
 
     eachAry(deps, function(elem){
-      _creater.loader(join(elem));
+      _creater.loader(elem);
     });
 
-    function join(sourcePath){
-      var url;
-      var spath = sourcePath.split(regSys);
-      
-      if (!config['baseUrl']){
-        url = spath.join('/');
-      }else {
-        if (spath[0] === '.'){
-          spath[0] = config['baseUrl'];
-        }else {
-          spath.unshift(config['baseUrl']);
-        };
-        url = spath.join('/');
-      };
-      console.log(config)
-      return url;
-    };
 
     function templateFn(fn){
       return function(){
@@ -144,22 +127,26 @@ var define, require, local;
     }
   };
 
+  function join(sourcePath){
+    var srcPath = sourcePath.split(regSys);
+    var script = srcPath.pop();
+
+    if (!config['baseUrl']){
+      config['baseUrl'] = srcPath.length ? srcPath.join('/') + '/' : './';
+    };
+  };
+
+  var _deps = anonyer();
+
   local = {
     config: function(cfg){
-      for (var each in cfg){
-        if (reserve.indexOf(each) >= 0){
-          config[each] = cfg[each];
-        };
-      };
-
       /*
        * Set config && Load all source needed.
        * But how can I do this?
        */
+      _deps.run(scriptCreater);
     }
   };
-
-  var _deps = anonyer();
 
   /* Get first script's config location from custom name local */
   eachAry(root.scripts, function(elem, i){
@@ -168,6 +155,6 @@ var define, require, local;
     }
   });
 
-  //_deps.run(scriptCreater);
+  _deps.run(scriptCreater);
 
 })(this);
