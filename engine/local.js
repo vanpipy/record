@@ -15,7 +15,6 @@ var define, require, local;
       regSys = /\//g;
 
   var config = {};
-  var reserve = ['baseUrl', 'paths'];
 
   function isType(type){
     return function(x){
@@ -60,39 +59,6 @@ var define, require, local;
     }
   };
 
-/*
-  var scriptCreater = {
-    load: function(url){
-      this.url = url;
-      this.create().append().watch();
-    },
-    create: function(){
-      var node = root.createElement("script");
-      node.type = "text/javascript";
-      node.charset = "utf-8";
-      node.async = "async";
-      this.node = node;
-
-      return this;
-    },
-    watch: function(){
-      var _this = this, node = this.node;
-
-      node.addEventListener("load", function(){}, false);
-      node.addEventListener("error", function(){err(_this.url +" is't exsit.")}, false);
-
-      return this;
-    },
-    append: function(){
-      var node = this.node;
-      node.src = this.url;
-      head.appendChild(node);
-
-      return this;
-    }
-  };
-*/
-
   function scriptCreater(deps){
     //isAry(deps) || err("deps must be an array!");
 
@@ -117,7 +83,6 @@ var define, require, local;
       _creater.loader(elem);
     });
 
-
     function templateFn(fn){
       return function(){
         fn.call(this);
@@ -128,30 +93,32 @@ var define, require, local;
   };
 
   function join(sourcePath){
-    var srcPath = sourcePath.split(regSys);
-    var script = srcPath.pop();
 
-    if (!config['baseUrl']){
-      config['baseUrl'] = srcPath.length ? srcPath.join('/') + '/' : './';
-    };
   };
 
   var _deps = anonyer();
 
   local = {
     config: function(cfg){
-      /*
-       * Set config && Load all source needed.
-       * But how can I do this?
-       */
-      _deps.run(scriptCreater);
+      _deps.add(scriptCreater);
     }
   };
 
+  var sourcePath, srcPath, script;
+
   /* Get first script's config location from custom name local */
   eachAry(root.scripts, function(elem, i){
+    //Found the init config path.
     if (elem.getAttribute("local")){
-      _deps.add(elem.getAttribute("local"));
+      sourcePath = elem.getAttribute("local");
+      srcPath = sourcePath.split(regSys);
+      script = srcPath.pop();
+      //Set default baseUrl.
+      if (!config['baseUrl']){
+        config['baseUrl'] = srcPath.length ? srcPath.join('/') + '/' : './';
+      };
+
+      _deps.add( config['baseUrl'] + script );
     }
   });
 
