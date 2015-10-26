@@ -1,0 +1,23 @@
+{
+  "name": "record",
+  "version": "1.0.0",
+  "description": "0.0.1",
+  "main": "index.js",
+  "scripts": {
+    "test": "At now, it's none."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vanpipy/record.git"
+  },
+  "keywords": [
+    "javascript",
+    "auto-work-flow."
+  ],
+  "author": "van",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vanpipy/record/issues"
+  },
+  "homepage": "https://github.com/vanpipy/record#readme"
+}
