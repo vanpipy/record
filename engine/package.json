@@ -1,0 +1,29 @@
+{
+  "name": "static_engine",
+  "version": "1.0.0",
+  "description": "0.0.0",
+  "main": "engine.js",
+  "scripts": {
+    "test": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vanpipy/record.git"
+  },
+  "keywords": [
+    "static",
+    "engine"
+  ],
+  "author": "van",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vanpipy/record/issues"
+  },
+  "homepage": "https://github.com/vanpipy/record#readme",
+  "devDependencies": {
+    "eslint": "^1.7.3",
+    "grunt": "^0.4.5",
+    "grunt-eslint": "^17.3.1",
+    "webpack": "^1.12.2"
+  }
+}
