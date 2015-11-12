@@ -28,23 +28,19 @@
         return '';
       });
 
-      var board = children(start);
-      var deep;
+      var a = [start];
+      var b = [];
 
-      while (start.length - i) {
-        console.log(i, start[i]);
-        i++;
+      for (; i < a.length; i++) {
+        b = b.concat(children(a[i]));
 
-        /*
-        if (start.length == i) {
-          i = 0;
-          deep = children(start.shift());
-
-          while (deep.length) {
-
-          }
+        if (i + 1 == a.length && b.length != 0) {
+          a = b;
+          b = [];
+          i = -1;
+        }else {
+          continue;
         };
-        */
       };
 
       return box;
