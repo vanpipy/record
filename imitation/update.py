@@ -1,4 +1,4 @@
-#!usr/bin/python
+#!/usr/bin/env python
 
 import os
 import sys
@@ -20,6 +20,7 @@ update_condition  = False
 update_state      = False
 zipDir            = ""
 targetPath        = ""
+clearFileName     = ""
 
 def usage():
   print
@@ -28,6 +29,13 @@ def usage():
   print '--zip=DirName\n - Zip local static source.\n'
   print '-t --target=path\n - Update static source to target path.\n'
   print '-h --help\n - get help.\n'
+
+def initDir():
+  """Initialize static directory in current path."""
+  if not os.path.exists(bashDirName):
+    os.mkdir(bashDirName);
+  else:
+    print "static directory is alreally exist. You can try --update."
 
 def listPackage():
   # git@git3.diligrp.com:dlstatic/components.git
@@ -52,10 +60,12 @@ def update():
         os.chdir( _path )
 
       for k in package[each]:
-        subprocess.call("git clone " + url + k)
+        subprocess.call("git clone " + url + k, shell=True)
 
         if type(package[each]) == dict:
           subprocess.call("mv " + k + " " + package[each][k])
+
+    # clearFile("node_modules")
 
   except:
     print 'Path %s is not exist in current path.' % bashDirName
@@ -76,16 +86,19 @@ def readOpt():
   global update_condition
   global zipDir
   global targetPath
+  global clearFileName
 
   try:
     opts, args = getopt.getopt(sys.argv[1:], 'lhz:t:', ['list', 'update', \
-      'help', 'zip=', 'target='])
+      'help', 'zip=', 'target=', 'init', 'clearfile='])
   except getopt.GetoptError as err:
     print str(err)
     usage()
     sys.exit(2)
 
   for o, a in opts:
+    if o in ('--init'):
+      initDir();
     if o in ('--list', '-l'):
       listPackage();
     if o in ('--update'):
@@ -94,8 +107,18 @@ def readOpt():
       zipDir = a
     if o in ('--target', '-t'):
       targetPath = a
+    if o in ('--clearfile'):
+      clearFileName = a
     if o in ('--help', '-h'):
       usage()
+
+def clearFile(name):
+  """
+  docstring for clearFile, clear all node_modules in package.
+  """
+  subprocess.call("find " + bashDirName + " -name " + name + " | xargs rm -rf",\
+      shell=True)
+  print "Clear finished."
 
 def main():
   readOpt()
@@ -108,6 +131,9 @@ def main():
 
   if len(targetPath):
     pass
+
+  if len(clearFileName):
+    clearFile(clearFileName);
 
 if __name__ == '__main__':
   main()
