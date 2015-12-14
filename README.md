@@ -7,7 +7,8 @@
 
 2. barm.
 
-    javascript css selector.
+    + javascript css selector.
+    + version 0.0.2
 
 3. imitation
 

@@ -83,8 +83,7 @@
       }else if (sysbol == ".") {
         equalTarget = element.className == name;
       }else {
-        var reg = new RegExp(name);
-        equalTarget = reg.test(element.nodeName.toLowerCase());
+        equalTarget = element.nodeName.toLowerCase() == name;
       };
 
       return equalTarget;
@@ -92,12 +91,6 @@
   };
 
   function setDOM(cacheAry, element) {
-    if (!element._setIn) {
-      element._setIn = true;
-    }else {
-      return false;
-    };
-
     cacheAry.push(element);
   };
 
