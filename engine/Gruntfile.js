@@ -8,17 +8,12 @@ module.exports = function(grunt){
     eslint: {
       src: {
         src: ['src/**/*.js']
-      },
-      build: {
-        src: ['Gruntfile.js', 'build/**/*.js']
       }
     }
 
   });
 
   grunt.loadNpmTasks('grunt-eslint');
-
-  require('./build/grunt-tasks/build')(grunt);
 
   grunt.registerTask('default', ['eslint']);
   grunt.registerTask('test', ['eslint']);
