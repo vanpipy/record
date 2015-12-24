@@ -1,17 +1,14 @@
 /*
- * Bot Arm
- * Yes, it's just like a rebot Arm
- * To select someone element from the Tree.
- * Begin at 2015/07/23 21:46:--
- * author by van
+ * Name
+ * -- Bot Arm
+ * Description
+ * -- Give some document help, like document API function 
+ *    querySelector, getElementById or other else.
+ * Version 
+ * -- 1.0.0.
  *
- * Hahaha it's first time I try to complete a arm in web brower.
- * In this time, it's really not hard, but I spend lots of time to understand
- * how it's going in web brower. Everything always worth to try and
- * everything need to try, cause I am not smart enough. 
- * Just do it always a nice way for me :).
- *
- * The first part 1 end at 2015/11/29 20:58:--
+ * Author by van
+ * 12/24 2015
  */
 
 (function(global, factory) {
@@ -24,89 +21,112 @@
     return new barm.fn.select(selector, context);
   };
 
+  /**
+   * Main query interface.
+   *
+   * @param {string} selector
+   * @return {Array}
+   * @public
+   */
   barm.fn = barm.prototype = {
     select: function(selector) {
       var box = []; 
       var nodes = [];
-      var start = context || root;
-      var i = 0;
-      var cache;
+      var cache, nodeCache;
 
       selector.replace(/([\>\-\+\~]*)(\s*[.#]?)([\d\w-]+)/g, function(match, rela, type, name, length, all) {
-        box.push({rela: rela, type: type, name: name});
+        box.push({rela: rela, type: type || ' ', name: name});
         return '';
       });
 
-      var a = [start];
-      var b = [];
+      var TreeA = [], i = 0, l = 0;
 
-      for (; i < a.length; i++) {
-        b = b.concat(children(a[i]));
+      cache = box.shift();
 
-        if (b.length) {
-          filterElement(b, box, nodes);
-        }
+      if (cache) {
+        var filterFn = filter(cache.type);
 
-        if (i + 1 == a.length && b.length != 0) {
-          a = b;
-          b = [];
-          i = -1;
-        }else {
-          continue;
+        if ( filterFn(root, cache.name) ) {
+          TreeA.push(root);
+        } else {
+          TreeA = TreeA.concat( children(root) );
+        };
+
+        for (l = TreeA.length; i < l ; i++) {
+          TreeA = TreeA.concat( children(TreeA[i]) );
+
+          if ( filterFn(TreeA[i], cache.name) ) {
+            nodes.push(TreeA[i]);
+          };
+
+          l = TreeA.length;
         };
       };
+
+      if (box.length) {
+        do {
+          cache = box.shift();
+          filterFn = filter(cache.type);
+
+          for (i = 0, l = nodes.length; i < l; i++) {
+            nodeCache = nodes.shift();
+            nodes = nodes.concat( children(nodeCache) );
+          };
+
+          for (i = 0, l = nodes.length; i < l; i++) {
+            nodeCache = nodes.shift();
+            if ( filterFn(nodeCache, cache.name) ) {
+              nodes.push(nodeCache);
+            };
+          };
+        } while (box.length);
+      }
 
       return nodes;
     }
   };
 
-  function filterElement(elementAry, markAry, nodesAry) {
-    var filterFn;
-    
-    for (var i = 0, l = markAry.length; i < l; i++) {
-      for (var k =  0, len = elementAry.length; k < len; k++) {
-        filterFn = filterName(markAry[i].type);
-
-        if (filterFn(elementAry[k], markAry[i].name)) {
-          setDOM(nodesAry, elementAry[k]);
-        };
-      };
-    };
-  };
-
-  function filterName(sysbol) {
-    return function (element, name) {
-      var equalTarget = false;
-
-      if (sysbol == "#") {
-        equalTarget = element.id == name;
-      }else if (sysbol == ".") {
-        equalTarget = element.className == name;
-      }else {
-        var reg = new RegExp(name);
-        equalTarget = reg.test(element.nodeName.toLowerCase());
-      };
-
-      return equalTarget;
-    };
-  };
-
-  function setDOM(cacheAry, element) {
-    if (!element._setIn) {
-      element._setIn = true;
-    }else {
-      return false;
+  /**
+   * Retrun filter function as different nameType.
+   *
+   * @param {string} sysbol
+   * @return {function}
+   */
+  function filter(sysbol) {
+    var filterFunction = {
+      '#': function (element, name) {
+        return element.id == name;
+      },
+      '.': function (element, name) {
+        return element.className == name;
+      },
+      ' ': function (element, name) {
+        var reg = new RegExp(name+ "$");
+        return reg.test(element.nodeName.toLowerCase());
+      }
     };
 
-    cacheAry.push(element);
+    return filterFunction[sysbol];
   };
 
+  /**
+   * Retrun children nodes of parent node.
+   *
+   * @param {Node} parentNode
+   * @return {Array}
+   */
   function children(parentNode) {
     var nodes = parentNode.children;
 
     return covert2Ary(nodes);
   };
 
+  /**
+   * Covert document collection to array.
+   *
+   * @param {HTMLCollection} collection
+   * @return {Array}
+   */
   function covert2Ary(collection) {
     var ary = [];
 
