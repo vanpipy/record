@@ -1,3 +1,5 @@
-require('./request');
-require('./define');
-require('./packer');
+
+var engine = {
+  deps: {},
+  baseDir: '.'
+};
