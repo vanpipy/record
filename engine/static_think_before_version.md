@@ -9,7 +9,7 @@ Here, I use Nodejs to complete thie part.
 
 But another question is coming.
 How to rebuild web view page?
-Just like the tag <link>, <script> and even the <html>, <body>, <div>,
+Just like the tag &lt;link&gt;, script and even the html, body, div,
 all of the html tag.
 
 Maybe the way start can be this.
@@ -20,12 +20,12 @@ avoid variable conflict.
 # Here is the first part.
 
 1.build javascript manager
---1.1 get local config. (foolish completed)
---1.2 anonymous manager
---1.3 config location
+1.1 get local config. (foolish completed)
+1.2 anonymous manager
+1.3 config location
 
 Charpter 1
---1.1
+1.1
   How to get local config?
   (function(){
     ...doSomething...
@@ -43,7 +43,7 @@ Charpter 1
   Absolute path is't necessary, how to combine base path with module is a problem.
   Especially a custom base path given.
 
---1.2
+1.2
   What anonymous function in javascript?
   function(.){...} it's like a function but no function name.
   In javascript, we can call anonymous function as callback function, cause we use
@@ -73,7 +73,7 @@ Charpter 1
   Maybe it's better or something I missed.
   #
 
---1.3
+1.3
   What's a config in javascript and how it works? It's the two important questions
   before we start code the local.config function.
 
