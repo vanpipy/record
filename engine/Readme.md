@@ -42,3 +42,21 @@ it will retrun a function or object into `engine.path['a.js']` and get some vari
     }
 
 It's only some guess, let me to do this. Time at 01/13 2015 23:01:--.
+
+---
+
+__Guess got an answer.__
+
+1.  Require or request module with the default base path, may the request start page or
+    module directory location.
+
+2.  When the script node you generate append to document correctly, add event `load` on it.
+
+3.  Function define push `{id : factory}` to a global variable `context.defQueue` as valid
+    function array.
+
+4. Reload and execute define function as node's `load` completed.
+
+__It's still some question box needed to open...__
+
+Time at 01/18 2015 maybe 11:--. 
