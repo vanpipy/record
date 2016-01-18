@@ -1,5 +1,5 @@
 
-define(function (require, module, exports) {
+define('a', function (require, module, exports) {
 
   return {
     init: function () {
