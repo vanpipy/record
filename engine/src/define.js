@@ -2,18 +2,10 @@ var define;
 
 (function(global){
 
-  var req;
-  
-  function module (map) {
-    this.deps = [];
-    this.map = map;
-  };
-
-  module.exports = {};
-
-  define = function (fn) {
-    req = require.relative(fn);
-    fn.call(global, req, module, module.exports);
+  define = function (id, factory) {
+    context.required = factory;
+    context.deps[id] = factory;
+    context.defQueue.push(factory());
   };
 
 })(this);
