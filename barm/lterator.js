@@ -1,27 +1,35 @@
 /**
  *  Lterator
+ *  Make the same visit way for ['array', 'object', 'string', 'number'];
+ *  
+ *  @example
+ *  var demo = {'a': 1, 'b': 2} || [1, 2, 3] || '123' || 123;
+ *  var exa = new lterator(demo);
  *
- *
+ *  exa.__ALL__ to show all method avaliable.
  */
 
 (function (global, factory, undefined) {
 
-  global.lterator = factory();
+  function makeLterator(target, lterator) {
+    target['lterator'] = lterator;
+  };
+
+  var lterator = factory();
+
+  if (global.barm) {
+    makeLterator(barm, lterator);
+  } else if (typeof define == 'function') {
+    return lterator;
+  } else {
+    makeLterator(global, lterator);
+  };
 
 })(this, function () {
 
   var op = Object.prototype;
   var tostring = op.toString;
   var hasOwn = op.hasOwnProperty; 
-  var isFun = is('Function');
-  var isAry = is('Array');
-  var isObj = is('Object');
-
-  function is (type) {
-    return function (o) {
-      return tostring.call(o) === '[object '+ type +']';
-    };
-  };
 
   function lterator (data) {
     this.keys = [];
@@ -73,14 +81,3 @@
 
   return lterator;
 });
-
-var a = ['a', 'b', 'c'];
-var c = {'a': 'abc', 'b': 2, 'c': 3};
-
-var b = new lterator(a);
-
-console.log(b);
-console.log(b.current());
-console.log(b.next());
-console.log(b.next());
-console.log(b.prev());
