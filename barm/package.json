@@ -1,0 +1,25 @@
+{
+  "name": "barm",
+  "version": "1.0.0",
+  "description": "robot barm",
+  "main": "barm.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha --bail --timeout 200"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vanpipy/record/tree/master/barm"
+  },
+  "keywords": [
+    "barm"
+  ],
+  "author": "vanpipy",
+  "license": "MIT",
+  "devDependencies": {
+    "better-assert": "^1.0.2",
+    "mocha": "^2.3.4"
+  }
+}

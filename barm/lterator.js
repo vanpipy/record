@@ -19,6 +19,8 @@
 
   if (global.barm) {
     makeLterator(barm, lterator);
+  } else if (module) {
+    module.exports = lterator;
   } else if (typeof define == 'function') {
     return lterator;
   } else {
