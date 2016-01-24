@@ -4,7 +4,11 @@
  *
  */
 
-(function (global, undefined) {
+(function (global, factory, undefined) {
+
+  global.lterator = factory();
+
+})(this, function () {
 
   var op = Object.prototype;
   var tostring = op.toString;
@@ -28,29 +32,21 @@
   };
 
   lterator.prototype.setLength = function () {
-    this.length = 0;
-
-    this.setKeys(this.data);
+    this.length = this.setKeys(this.data);
   };
 
   lterator.prototype.setKeys = function (input) {
-    if (isAry(input)) {
-      this.length = input.length;
-
-      for (var i = 0, l = this.length; i < l; i++) {
+    if (input.length) {
+      for (var i = 0, l = input.length; i < l; i++) {
         this.keys[i] = i;
       };
-    };
-
-    if (isObj(input)) {
+    } else {
       for (var each in input) {
         this.keys.push(each);
       };
-
-      this.length = this.keys.length;
     };
 
-    return this.length;
+    return this.length = this.keys.length;
   };
 
   lterator.prototype.current = function () {
@@ -58,19 +54,33 @@
   };
 
   lterator.prototype.next = function () {
-    this.pointer++;
+    this.hasNext() ? this.pointer++ : 0;
     return this.current();
   };
 
-  window.lterator = lterator;
+  lterator.prototype.prev = function () {
+    this.itsFirst() ? 0 : this.pointer--;
+    return this.current();
+  };
 
-})(window);
+  lterator.prototype.hasNext = function () {
+    return this.length - 1 > this.pointer ? 1 : 0;
+  };
+
+  lterator.prototype.itsFirst = function () {
+    return this.pointer === 0 ? true : false;
+  };
+
+  return lterator;
+});
 
 var a = ['a', 'b', 'c'];
 var c = {'a': 'abc', 'b': 2, 'c': 3};
 
-var b = new lterator(c);
+var b = new lterator(a);
 
+console.log(b);
 console.log(b.current());
 console.log(b.next());
 console.log(b.next());
+console.log(b.prev());
