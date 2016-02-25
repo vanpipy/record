@@ -30,57 +30,57 @@
    */
   barm.fn = barm.prototype = {
     select: function(selector) {
-      var box = []; 
-      var nodes = [];
-      var cache, nodeCache;
+      var box = nodes = nodeCache = [];
+      var node = root;
+      var state = true;
+      var i = 0;
 
       selector.replace(/([\>\-\+\~]*)(\s*[.#]?)([\d\w-]+)/g, function(match, rela, type, name, length, all) {
         box.push({rela: rela, type: type || ' ', name: name});
         return '';
       });
 
-      var TreeA = [], i = 0, l = 0;
-
-      cache = box.shift();
-
-      if (cache) {
-        var filterFn = filter(cache.type);
-
-        if ( filterFn(root, cache.name) ) {
-          TreeA.push(root);
+      do {
+        console.log("<---", node, Object.prototype.toString.call(node), "--->");
+        // Depend on the boolean of state, go deep or broad search;
+        if (state) {
+          // Deep search
+          node = node.firstElementChild;
+          if (!node.firstElementChild) {
+            // FirstElementChild is null, turn to broad search.
+            state = false;
+          };
         } else {
-          TreeA = TreeA.concat( children(root) );
+          // Broad search
+          if (!state && !node.nextElementSibling) {
+            // When the node is only has the relation child to parent.
+            // And back to parent, the state is still false cause it's
+            // do deep search ever, the state is a luck coincidence. 
+            node = node.parentNode;
+
+            // Avoid repeat visit once a node visited already. 
+            // So do this, return parent node.
+            continue;
+          };
+
+          // To search next brother if it has one.
+          if (node.nextElementSibling) {
+            node = node.nextElementSibling;
+          } else {
+            // And next brother is not exsit, turn to deep search.
+            state = true;
+          };
+
+          // When run broard search but the node has child, turn to deep search.
+          if (!state && node.firstElementChild) {
+            state = true;
+          };
         };
 
-        for (l = TreeA.length; i < l ; i++) {
-          TreeA = TreeA.concat( children(TreeA[i]) );
-
-          if ( filterFn(TreeA[i], cache.name) ) {
-            nodes.push(TreeA[i]);
-          };
-
-          l = TreeA.length;
+        if (node === root) {
+          break;
         };
-      };
-
-      if (box.length) {
-        do {
-          cache = box.shift();
-          filterFn = filter(cache.type);
-
-          for (i = 0, l = nodes.length; i < l; i++) {
-            nodeCache = nodes.shift();
-            nodes = nodes.concat( children(nodeCache) );
-          };
-
-          for (i = 0, l = nodes.length; i < l; i++) {
-            nodeCache = nodes.shift();
-            if ( filterFn(nodeCache, cache.name) ) {
-              nodes.push(nodeCache);
-            };
-          };
-        } while (box.length);
-      }
+      } while (node);
 
       return nodes;
     }
