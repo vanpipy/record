@@ -30,18 +30,28 @@
    */
   barm.fn = barm.prototype = {
     select: function(selector) {
-      var box = nodes = nodeCache = [];
+      var box = [];
+      var nodes = [];
+      var nodeCache = [];
+      var fns = [];
+
       var node = root;
+
       var state = true;
-      var i = 0;
+      var catchTime = false;
 
       selector.replace(/([\>\-\+\~]*)(\s*[.#]?)([\d\w-]+)/g, function(match, rela, type, name, length, all) {
         box.push({rela: rela, type: type || ' ', name: name});
         return '';
       });
 
+      for (var i = 0, l = box.length; i < l; i++) {
+        fns[i] = filter(box[i].type);
+      };
+
+      i = 0; 
+
       do {
-        console.log("<---", node, Object.prototype.toString.call(node), "--->");
         // Depend on the boolean of state, go deep or broad search;
         if (state) {
           // Deep search
@@ -58,8 +68,10 @@
             // do deep search ever, the state is a luck coincidence. 
             node = node.parentNode;
 
+            catchTime = false;
+
             // Avoid repeat visit once a node visited already. 
-            // So do this, return parent node.
+            // So do this, goto next loop.
             continue;
           };
 
@@ -74,6 +86,28 @@
           // When run broard search but the node has child, turn to deep search.
           if (!state && node.firstElementChild) {
             state = true;
+          };
+        };
+
+        //Open catch progress when any match happened.
+        if ( i < l && fns[i](node, box[i].name) ) {
+          catchTime = true;
+        };
+
+        if ( catchTime ) {
+          //Catching next node again and again.
+          //And if got it once, try to cache it.
+          if (fns[i](node, box[i].name)) {
+            //Try to cache the match node, if the index of match is the last one.  
+            if (i == l - 1) {
+              nodes.push(node);
+
+              //Once cached successfully, keep the match function state,
+              //waiting next right node, if the rest of searching has more node matched.
+              continue;
+            };
+
+            i++;
           };
         };
 
@@ -93,7 +127,7 @@
    * @return {function}
    */
   function filter(sysbol) {
-    var filterFunction = {
+    return {
       '#': function (element, name) {
         return element.id == name;
       },
@@ -104,37 +138,11 @@
         var reg = new RegExp(name+ "$");
         return reg.test(element.nodeName.toLowerCase());
       }
-    };
-
-    return filterFunction[sysbol];
+    }[ (sysbol.length > 1 && trim(sysbol)) || sysbol ];
   };
 
-  /**
-   * Retrun children nodes of parent node.
-   *
-   * @param {Node} parentNode
-   * @return {Array}
-   */
-  function children(parentNode) {
-    var nodes = parentNode.children;
-
-    return covert2Ary(nodes);
-  };
-
-  /**
-   * Covert document collection to array.
-   *
-   * @param {HTMLCollection} collection
-   * @return {Array}
-   */
-  function covert2Ary(collection) {
-    var ary = [];
-
-    for ( var i = 0, l = collection.length; i < l; i++ ) {
-      ary[i] = collection[i];
-    };
-
-    return ary;
+  function trim (string) {
+    return string.replace(/^\s+/, '').replace(/\s+$/, '');
   };
 
   return barm;
