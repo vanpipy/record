@@ -49,7 +49,9 @@ it from the java tutorials for JDK 8.
     }
 
 # Classes and Objects
-* Classes
+
+#### Classes
+
 ```
     public class Bicycle {
 
@@ -90,13 +92,48 @@ it from the java tutorials for JDK 8.
 ```
 
 that is the explaination of `fields, local variables and parameters`.
-    + Member variables in a class --- these are called fields.
-    + Variables in a method or block of code --- these are called local variables.
-    + Variables in method declarations --- these are called parameters.
+1. Member variables in a class --- these are called fields.
+2. Variables in a method or block of code --- these are called local variables.
+3. Variables in method declarations --- these are called parameters.
 
-* Objects
-* Nested Classes
-* Enum Types
+#### Objects
+1. Controling access to member of a Class - public, private, protected, _no modifier_.
+2. Understanding Class Members - _static_ and otherside.
+```
+    public class Bicycle {
+        private int cadence;
+        ...
+
+        private int id;
+
+        private static int numberOfBicycle = 0;
+
+        private final static int PI = 3.141592653589793; //it can not be changed anymore.
+
+        public Bicycle(int startCadence, int startSpeed, int startGear) {
+            cadence = startCadence;
+            ...
+
+            id = ++numberOfBicycle;
+        }
+
+        public int getID() {
+            return id;
+        }
+    }
+
+    Bicycle.numberOfBicycle; //0
+
+    newBicycle = new Bicycle(0, 0, 0);
+    newBicycle.getID(); //1
+
+    Bicycle.numberOfBicycle; //1
+```
+
+
+#### Nested Classes
+
+#### Enum Types
 
 # Annotations
 Annotations, a form of metadata, provide data about a program that is not part of the program itself. Annotations hav no direct effect on the operation of the code they annotate.
