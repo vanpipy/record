@@ -173,8 +173,14 @@ void monitorTemperature() throws @Critical TemperatureExcetion { ... }
 The Predefined annotation types defined in java.lang are @Deprecated, @Override, @Suppresswarnings, @SafeVarages, @FunctionalInterface. And several meta-annotation types defined in java.lang.annotation. @Retention, @Documented, @Target, @Inherited, @Repeatable.
 
 # Interfaces and Inheritance
-* Interfaces
-* Inheritance
++ `Interface` You can read more about interfaces here - what they are for, why you might want to write one, and how to write one.
++ `Inheritance` Describe the way in which you can derive one class from another.
+
+#### Interfaces
+An _interface_ is a reference type, similar to a class, that can contain only constants, method signatures, default methods, and nested types.
+
+#### Inheritance
+The idea of inheritance is simple but powerful: When you want to create a new class and there is already a class that includes some of the code that you want, you can derive your new class form the existing class, In doing this, you can reuse the fields and methods of the existing class without having to write (and debug!) them yourself.
 
 # Numbers and Strings
 * Numbers
