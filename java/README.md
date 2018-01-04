@@ -99,6 +99,7 @@ that is the explaination of `fields, local variables and parameters`.
 #### Objects
 1. Controling access to member of a Class - public, private, protected, _no modifier_.
 2. Understanding Class Members - _static_ and otherside.
+
 ```
     public class Bicycle {
         private int cadence;
@@ -130,7 +131,6 @@ that is the explaination of `fields, local variables and parameters`.
     Bicycle.numberOfBicycle; //1
 ```
 
-
 #### Nested Classes
 
 #### Enum Types
@@ -140,9 +140,37 @@ Annotations, a form of metadata, provide data about a program that is not part o
 
 Annotations have a number of uses, among them:
 
-    + Infomation for the compiler - Annotations can be used by the compiler to detect errors or suppress warnings.
-    + Compiler-time and deployment-time processing - Software tools can process annotation infomation to generate code, XML files, and so forth.
-    + Runtime processing - Some annotations are availdable to be examined at runtime.
++ Infomation for the compiler - Annotations can be used by the compiler to detect errors or suppress warnings.
++ Compiler-time and deployment-time processing - Software tools can process annotation infomation to generate code, XML files, and so forth.
++ Runtime processing - Some annotations are availdable to be examined at runtime.
+
+#### The format of an Annotation
+The at sign character (@) indicates to the compiler that what follows is an annotation, just like below:
++ @Entity
++ @Override
++ @Author(name = "Jane")
++ @SuppressWarnings("unchecked")
++ ...
+
+#### Where Annotations Can Be Used
+Annotations can be applied to declarations: declaration of classes, fields, methods, and other program elements.
+
+```
+//Class instance creation expression
+new @Interned MyObject();
+
+//Type cast
+myString = (@NotNull String) str;
+
+//Implements clause
+class UnmodifiedList<T> implements @Readonly List<@Readonly T> { ... }
+
+//Throw exception declaration
+void monitorTemperature() throws @Critical TemperatureExcetion { ... }
+```
+
+#### Predefined Annotation Types
+The Predefined annotation types defined in java.lang are @Deprecated, @Override, @Suppresswarnings, @SafeVarages, @FunctionalInterface. And several meta-annotation types defined in java.lang.annotation. @Retention, @Documented, @Target, @Inherited, @Repeatable.
 
 # Interfaces and Inheritance
 * Interfaces
