@@ -183,11 +183,47 @@ An _interface_ is a reference type, similar to a class, that can contain only co
 The idea of inheritance is simple but powerful: When you want to create a new class and there is already a class that includes some of the code that you want, you can derive your new class form the existing class, In doing this, you can reuse the fields and methods of the existing class without having to write (and debug!) them yourself.
 
 # Numbers and Strings
-* Numbers
-* Strings
+
+#### Numbers
+All of the numeric wrapper classes are subclasses of the abstract class Number include Byte, Integer, Double, Short, Float, Long.
+```
+int number = 40;
+```
+
+#### Strings
+Strings are objects.
+```
+char ch = "a";
+char[] charArray = { 'a', 'b', 'c', 'd', 'e' };
+
+String greeting = "Hello";
+String helloArray = { 'a', 'b', 'c', 'd', 'e' };
+String helloString = new String(helloArray);
+
+//creates empty bulider, capacity 16
+String sb = new StringBuilder();
+sb.append("Greetings");
+```
+
+#### Autoboxing and Unboxing
+Autoboxing is the automatic conversion that the Java compiler between the primitive types and their corresponding object wrapper classes. For example, converting an _int_ to an _Integer_, a _double_ to a _Double_, and so on. if the conversion goes the other way, this is called _unboxing_.
 
 # Generics
 The compiler-time bugs can be detected easier than others, so the Generics add stability to your code by making more of your bugs detectable at compiler time.
+
+Enabling programmer to implement generics glgorithms.
+
+```
+//The following code snippet without generics requires casting.
+List list = new ArrayList();
+list.add("hello");
+String s = (String) list.get(0);
+
+//re-write the code upon with using generics, the code does not require casting.
+List<String> list = new ArrayList<String>();
+list.add("hello");
+String s = list.get(0) // no cast
+```
 
 # Packages
 Packages are a feature of the Java programing language that help you to organize and structure your classes and their relationships to one another.
