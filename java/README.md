@@ -228,6 +228,8 @@ String s = list.get(0) // no cast
 # Packages
 Packages are a feature of the Java programing language that help you to organize and structure your classes and their relationships to one another.
 
+read [this](https://docs.oracle.com/javase/tutorial/java/package/packages.html) when try to use it.
+
 # Object-Oriented Programing Concepts
 It's some good questions for the concepts about OOP.
 
