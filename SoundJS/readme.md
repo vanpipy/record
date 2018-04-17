@@ -6,15 +6,19 @@
 4. Choose final destination of audio, for example your system speaker.
 5. Connect the sources up to the effects, and the effects to the destination.
 
-As words above, it's the typical workflow for web audio.
 
-Fake code as below:
+    ---------------------------------------------------------
+    |                   Audio Context                       |
+    |                                                       |
+    |   ----------      -----------      ---------------    |
+    |   | Inputs | ---> | Effects | ---> | Destination |    |
+    |   ----------      -----------      ---------------    |
+    |                                                       |
+    ---------------------------------------------------------
 
-    <audio-context>
-        <sources></sources>
-        <effects></effects>
-        <destination></destination>
-    </audio-context>
+
+# Web Audio API Interfaces
+
 
 ### Audio data: what's in a sample
 When an audio signal is processed, sampling means the conversion of a continuous signal to a discrete signal; or put another way, a coutinuous sound wave, such as a band playing live, is converted to a sequence of samples( a discrete-time signal) that allow a computer to handle the audio in distinct blocks.
@@ -27,5 +31,20 @@ A sample is a single float32 value that represents the value of the audio stream
 A frame, or sample frame, is the set of all values for all channels that will paly at a specific point in time: all the samples of all the channels that play at the same time(two for a stereo sound, six for 5.1 etc.)
 
 The sample rate is the number of those samples(or frames, since all samples of a frame paly at the same time) that will play in one second, measured in Hz. the higher the sample rate, the better the sound quality.
+
+# Implement
+
+    //Set audio context.
+    var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+    //Set effects middleware.
+    var oscillator = audioCtx.createOscillator();
+    var gainNode = audioCtx.createGain();
+    var analyser = audioCtx.createAnalyser();
+
+    var source = audioCtx.createMediaElementSource(DOM);
+
+    source.connect(analyser);
+    analyser.connect(audioCtx.destination);
 
 
