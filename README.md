@@ -1,7 +1,6 @@
 # Record
 
 ### Fix the problem of seeing video on coursera.org
-Add 
 
 ```
 52.84.246.90    d3c33hcgiwev3.cloudfront.net
