@@ -75,7 +75,7 @@
 
 ![](https://www.quirksmode.org/mobile/pix/viewport/desktop_page_zoomed.jpg)
 
-## 内容; 视窗
+## 内容: 视窗
 在讨论更多的javascript属性之前，必须先介绍另外一个内容: 视窗。
 
 视窗的功能就是约束 `<html>` 元素，也就是处于网站最外层的容器。
@@ -92,20 +92,112 @@
 
 作为视窗，反过来讲，的确等于浏览器窗口，也的确是如此定义的。视窗不是HTML结构，所以CSS对其没有影响，它只是和浏览器宽高相同，在桌面环境中如此。而在移动设备环境中会稍微复杂一点。
 
-## 结论
-这些事务状态可以得到一些很有趣的结论。你可以在但前站点看到他们其中之一。尽可能的滚动到顶部，然后发达两到三倍，让网站内容超出浏览器窗口。
+## 意义
+这些事务的状态有一些很有趣的结论。你在当前站点的就可以看到其中的一个现象。滚动到顶部，然后放大两倍或者三倍然后网站的内容就跑到浏览器窗口的外面了。
 
-现在滚动到最右边，你会看到在最顶部的蓝色横幅并没有对齐边界。
+然后再滚动到右边，可以看到网站的蓝色边框没有覆盖到具体的位置了。
 
 ![](https://www.quirksmode.org/mobile/pix/viewport/desktop_htmlbehaviour.jpg)
 
-这个行为就是一个关于视窗如何定义的结论。我给一个蓝色横幅定义宽度`width: 100%`。什么的100%? 当然是<html>元素，同视窗宽度一致，同样也同浏览器窗口宽度一致。
+这个行为就是视窗如何定义的一个结论。我定义蓝色边框宽度为`width: 100%`，100%的属性参考是什么？当然是`<html>`元素，和视窗宽度一致，同样也和浏览器宽度一致。
 
-需要指出的是：在缩放程度为100%时，它工作的很好，现在我们放大视窗，网站的总宽度将会变小。这对于它自身来说没有什么影响，内容会溢出，但是元素具有属性`overflow: visible`, 意味着溢出的内容无论如何都会显示。
+注意：当缩放等级为100%的时候，100%宽度工作如同我们认为那样，但是当我们放大视窗后边框变得比网站宽度小了。对于内容本身来将，这没什么影响，因为html元素具有属性`overflow: visible`，代表超出的内容始终会显示。
 
-但是蓝色横幅并没有溢出。我定义了宽度10%，而且浏览器也遵循给出的视窗宽度。他们并不关心现在宽度表现的多糟糕。
+但是蓝色边框并不会泄漏出去。定义的宽度`width: 100%`，同时浏览器也遵循视窗给出的宽度来显示。他们也并不关心宽度显示的如何糟糕。
 
 ![](https://www.quirksmode.org/mobile/pix/viewport/desktop_100percent.jpg)
 
-## 文档宽度？
+## 文档宽度?
+实际上我的确需要知道的是所有内容组成的页面的宽度是多少，包含"伸出"的那些部分。迄今为止，我发现不大可能找到这些数值(好吧，除非你通过计算页面上所有元素的各个宽度和外间距，但是讲道理，很容易出错)。
 
+我开始相信一个事实，即我们需要一对Javascript属性来描述我称为`document width`的内容(显然，是面向CSS像素的)。
+
+![](https://www.quirksmode.org/mobile/pix/viewport/desktop_documentwidth.jpg)
+
+如果我们真的觉得很好的话，为啥不把这个数值暴露到CSS中？我真的蛮喜欢标记`width: 100%`到我的蓝色横幅上且基于文档宽度，而不是`<html>`元素的宽度。(这样做势必需要一个鬼把戏才能实现，所以我对于不可能并不惊讶。)
+
+浏览器供应商，你怎么想？
+
+## 测量视窗
+也许你想知道视窗的尺寸。视窗的属性可以通过`document.documentElement.clientWidth` 和 `Height`来访问。
+
+![](https://www.quirksmode.org/mobile/pix/viewport/desktop_client.jpg)
+
+如果你知道你的DOM，你就会知道`document.documentElement`实际上就是`<html>`元素：任意HTML文档的根元素。不过怎么说呢，视窗还要高那么一个级别。视窗是包含`<html>`元素的元素。当然赋予`<html>`元素一个宽度对这些并没有什么影响。(我并不建议这么做，只是因为有这个可能性。)
+
+在某种情况下`document.documentElement.clientWidth` 和 `-Height` 一直都可以代表视窗的尺寸，而不是`<html>`元素。(这是一个特殊的规则，只有这个元素且只有这一对属性。在其他情况使用元素的实际宽度)
+
+![](https://www.quirksmode.org/mobile/pix/viewport/desktop_client_smallpage.jpg)
+
+所以`document.documentElement.clientWidth` 和 `-Height` 总是代表视窗的尺寸，而不是`<html>`的尺寸。
+
+## 两个属性对
+是不是视窗的尺寸也可以通过`window.innerWidth/Height`来获得？好吧，可以也不可以。
+
+在两个属性对之间有一个很正是的差异：`document.documentElement.clientWidth/Height`不包含滚动条，而`window.innerWidth/Height`是包含的。当然这看起来有点鸡蛋里挑骨头。
+
+实际上事实是这两个属性对是浏览器大战的延续。那时候网景只支持`window.innerWidth/Height`，而IE只支持`document.documentElement.clientWidth/Height`。直到所有的其他浏览器开始支持`clientWidth/Height`，但是IE就是这么叼，并不支持`window.innerWidth/Height`。
+
+同时在桌面环境中支持两个属性对都是可用只是一个小麻烦 -- 但是在移动设备上，就成了一个祝福了，其后我们将看到这个。
+
+## 测量`<html>`元素
+因此`clientWidth/Height`在所有情况下都给出了视窗的尺寸。但是哪里可以找到`<html>`元素的尺寸？这些尺寸存储在`document.documentElement.offsetWidth/Height`。
+
+![](https://www.quirksmode.org/mobile/pix/viewport/desktop_offset.jpg)
+
+这些属性的确让你可以访问`<html>`元素如同访问块级元素；如果你设置`width`,那么`offsetWidth`也会同步变化。
+
+![](https://www.quirksmode.org/mobile/pix/viewport/desktop_offset_smallpage.jpg)
+
+## 事件坐标
+然后就是事件坐标。当鼠标移动时，不少于五对属性对可以给予你关于时间的确切位置信息。对于我们的讨论而言，其中三个是重要的：
+
+1. `pageX/Y`代表相对于`<html>`元素的CSS像素坐标。
+2. `clientX/Y`代表相对于视窗的CSS像素坐标。
+3. `screenX/Y`代表相对于屏幕的设备像素坐标。
+
+pageX/Y
+
+![](https://www.quirksmode.org/mobile/pix/viewport/desktop_pageXY.jpg)
+
+clientX/Y
+
+![](https://www.quirksmode.org/mobile/pix/viewport/desktop_clientXY.jpg)
+
+screenX/Y
+
+![](https://www.quirksmode.org/mobile/pix/viewport/desktop_screenXY.jpg)
+
+你会使用`pageX/Y`的几率在90%；通常情况下，你向知道的是事件相对于文档的坐标位置。还有其他10%就是你会使用`clientX/Y`。你大概永远也不需要知道相对于设备的坐标位置。
+
+## 媒体查询
+最后，还有一点关于媒体查询的内容。这个概念很简单：你可以定义特殊的CSS规则只有当页面的宽度大于或者等于或者小于一个确定的尺寸的时候，才应用这段规则。举个栗子：
+
+    div.sidebar {
+        width: 300px;
+    }
+
+    @media all and (max-width: 400px) {
+        // styles assinged when width is smaller than 400px;
+        div.sidebar {
+            width: 100px;
+        }
+    }
+
+现在sidebar宽度为300px，除了CSS宽度小于400px的时候，小于400px的宽度的时候sidebar宽度将变成100px。
+
+问题当然是：哪一个宽度是我们需要测量的？
+
+这里有两个相关的媒体查询要素：`width/height`和`device-width/device-height`。
+
+1. `width/height`使用同`documentElement.clientWidth/Height`相同的数值(同样也是视窗)。基于CSS像素。
+2. `device-width/height`使用同`screen.width/height`的数值(同屏幕相同)。基于设备像素。
+
+![](https://www.quirksmode.org/mobile/pix/viewport/desktop_mediaqueries.jpg)
+
+到底该使用哪一个呢？想都不用想：`width`，必须的。Web开发者并不关心设备尺寸；它是浏览器窗口的宽度。
+
+因此在桌面环境中使用`width`，然后忘掉`device-width`。正如同我们看到的，在移动设备中情况要严重复杂的多。
+
+## 结论
+以上便是我们进入桌面环境中，总结的浏览器的行为和表现。[这系列的第二部分](https://www.quirksmode.org/mobile/viewports2.html)展示了其他的内容，以上内容在移动设备的行为表现，以及一些重要且显著的不同。
