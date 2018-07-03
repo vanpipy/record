@@ -200,4 +200,4 @@ screenX/Y
 因此在桌面环境中使用`width`，然后忘掉`device-width`。正如同我们看到的，在移动设备中情况要严重复杂的多。
 
 ## 结论
-以上便是我们进入桌面环境中，总结的浏览器的行为和表现。[这系列的第二部分](https://www.quirksmode.org/mobile/viewports2.html)展示，同样行为在在移动设备的表现，以及一些重要且显著的区别。
+以上便是我们进入桌面环境中，总结的浏览器的行为和表现。[这系列的第二部分](https://www.quirksmode.org/mobile/viewports2.html)展示了，同样行为在在移动设备的表现，以及一些重要且显著的区别。
