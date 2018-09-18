@@ -54,3 +54,12 @@ require(['module-a', 'module-b'], function(a, b) {
 * AMD 异步模块加载，主要为浏览器涉及的加载机制。
 
 ## CommonsChunkPlugin creates a vendor chunk
+
+## [What do you mean by "Event-Driven"?](https://martinfowler.com/articles/201701-event-driven.html)
+1. Event Notification
+2. Event-Carried State Transfer
+3. Event-Sourcing
+4. CQRS(Command Query Responsibility Segregation)
+
+Make sense of these patterns. 
+
