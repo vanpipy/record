@@ -53,4 +53,46 @@ George Commins 对这类基础内容做出了[最棒的解释](https://stackover
 显然，所有的视窗衡量的单位都是样式像素。但是当虚拟视窗通过缩放改变的时候(如果你放大，CSS像素将会更少的出现在屏幕中)，而布局视窗的尺寸仍然一样。(要是他们不这样，你的页面会不断按照重新计算的百分比宽度进行重排。)
 
 # 理解布局视窗
+为了理解布局视窗的尺寸是什么，我们得先看看当缩小到最小程度时候发生了什么。许多手机上的浏览器一开始都最大程度的缩小模式不管展示什么内容。
+
+重点是：浏览器选择了他们的布局视窗的尺寸，这样就完全的覆盖了整个屏幕在最大程度的缩小模式下(这个时候就等于虚拟视窗)
+
+![](https://www.quirksmode.org/mobile/pix/viewport/mobile_viewportzoomedout.jpg)
+
+因此布局视窗的宽和高就等于在最大程度的缩小模式下的任何展示在屏幕里的内容。即便是用户放大这些尺寸也保持一样。
+
+![](https://www.quirksmode.org/mobile/pix/viewport/mobile_layoutviewport.jpg)
+
+布局视窗的宽度总是一样的。如果你旋转你的手机，虚拟视窗发生了改变，但是浏览器会稍微的放大一下去适应新的方向，于是布局视窗又再次保持和虚拟视窗一样的宽度了。
+
+![](https://www.quirksmode.org/mobile/pix/viewport/mobile_viewportzoomedout_la.jpg)
+
+这样会影响布局视窗的高度，视窗的高度远远小于纵向模式的高度。但是Web开发者根本不关心这个高度，只关心宽度。
+
+![](https://www.quirksmode.org/mobile/pix/viewport/mobile_layoutviewport_la.jpg)
+
+# 如何测量布局视窗的尺寸
+现在有两种视窗的尺寸需要我们去测量。然后非常幸运的是，浏览器大战给予了我们两对这样的属性。
+
+`document.documentElement.clientWidth`和`-Height`包含了布局视窗的尺寸。
+
+![](https://www.quirksmode.org/mobile/pix/viewport/mobile_client.jpg)
+
+屏幕方向和高度紧密相关，跟宽度没什么联系。
+
+![](https://www.quirksmode.org/mobile/pix/viewport/mobile_client_la.jpg)
+
+# 如何测量虚拟视窗的尺寸
+对于虚拟视窗而言，可以使用 `window.innerWidth/Height`来获取相应的尺寸。显然的，当用户尝试进行缩放操作的时候，这个测量结果是会变化的，因为可能有更多或者更少的CSS像素点填充在屏幕中。
+
+![](https://www.quirksmode.org/mobile/pix/viewport/mobile_inner.jpg)
+
+可惜的是，这里是一个尚未获得兼容的区域；许多浏览器依然保持了对虚拟视窗测量功能的支持，同时还有一些浏览器没有这样的测量功能支持，所以我估计 `window.innerWidth/Height` 算是一个标准，尽管是一个比较糟糕的支持属性。
+
+# 屏幕
+在桌面设备中，`screen.width/height` 给出了屏幕的尺寸，基于设备像素的基本单位。当然在桌面环境中，作为一个开发者你根本不需要这样的信息。你对屏幕的物理尺寸也根本不感兴趣，除了有多少CSS像素填充在屏幕中。
+
+![](https://www.quirksmode.org/mobile/pix/viewport/mobile_screen.jpg)
+
+# 缩放比例
 TODO
