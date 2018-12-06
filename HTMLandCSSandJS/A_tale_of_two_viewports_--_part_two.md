@@ -95,4 +95,82 @@ George Commins 对这类基础内容做出了[最棒的解释](https://stackover
 ![](https://www.quirksmode.org/mobile/pix/viewport/mobile_screen.jpg)
 
 # 缩放比例
-TODO
+直接得到缩放比例的数据是不存在的，但是你可以通过 `screen.width` 和 `window.innerWidtth` 的整除计算结果来得到。当然这种方式只在用到的属性都被良好支持的情况下才可以。
+
+不过幸运的是缩放比例并没什么卵用也不重要。你需要关心的是当前有多少CSS像素点填充在屏幕中。你可以用 `window.innerWdith` 来获得这些数据 - 当然属性被正确支持的情况下。
+
+# 滚动偏移量
+还有一些你需要知道的是当前虚拟视窗相对于布局视窗，其所在的位置。这就是滚动偏移量，就和桌面环境中一样，存储在 `window.pageX/YOffset` 属性。
+
+![](https://www.quirksmode.org/mobile/pix/viewport/mobile_page.jpg)
+
+# `html` 元素
+和桌面环境一样， `document.documentElement.offsetWidth/Height` 给出了 `<html>` 元素CSS像素级别的完整尺寸。
+
+![](https://www.quirksmode.org/mobile/pix/viewport/mobile_offset.jpg)
+
+# 媒体查询类
+媒体查询作用的方式也同桌面环境下一样。宽度和高度都使用布局视窗作为参考系也基于CSS像素来进行测量，设备宽度和高度基于设备像素级别来进行测量。
+
+换个说法的话，宽度和高度反映为 `document.documentElement.clientWidth/Height`，同时设备宽度和高度也反应为 `screen.width/height`。(在所有的浏览器这个说法都成立，即便反映的数值有误。)
+
+![](https://www.quirksmode.org/mobile/pix/viewport/mobile_mediaqueries.jpg)
+
+现在让我们看看哪些测量结果对web开发者来说是更有用的呢? 重点是，其实我也不知道。
+
+我曾经考虑设备宽度应该是最重要的一个，因为它让我们了解我们能够使用的设备的一些信息。举个例子，你可以改变你的布局宽度去容纳设备的宽度。不管怎么说，你还可以通通过 `<meta viewport>` 的方式去做同样的事情；并没有绝对的必要去使用设备媒体查询。
+
+所以是不是宽度是更重要的媒体查询方式? 嗯...可能吧；它让我们看到一些想法的痕迹，在设备上浏览器供应商设想的一种拥有良好宽度表现的网站。但是那样实在是让人感到茫然，实际上宽度的媒体查询并没有给出任何其他信息。
+
+所以我也是无法决定。有时候我会思考媒体查询对于区分你是在桌面，或者平板，或者是手机设备来说很重要，但是对于分辨众多的平板和手机设备来说，又没那么有用。
+
+或许还有其他可能。
+
+# 事件坐标
+事件坐标工作的方式也同桌面环境一样。不过不走运的是，在十二种经过测试的浏览器里面，只有两种，Sybian Webkit 和 Iris，获取三个属性对的结果是完全正确的。其他的浏览器或多或少都有一些严重的问题。
+
+`pageX/Y` 依然基于CSS像素级别相对于页面进行定位，这也是目前为止三个属性对里面最有用的一个，就同桌面环境一样。
+
+![](https://www.quirksmode.org/mobile/pix/viewport/mobile_pageXY.jpg)
+
+`clientX/Y` 是基于CSS像素级别相对于虚拟视窗进行定位。这个好像蛮有意义的，虽然我也不能完全确定有什么好处。
+
+`screenX/Y` 是基于设备像素级别相对于屏幕进行定位。当然，使用的参考系同 `clientX/Y` 是一样的，设备像素没什么用。所以我们完全不用担心 `screenX/Y`；就和桌面环境里面一样，没有什么用。
+
+![](https://www.quirksmode.org/mobile/pix/viewport/mobile_clientXY.jpg)
+
+# 元视窗
+最后，让我们来讨论一下 `<meta name="viewport" content="width=320">`；最初是是一个Apple扩展名但是随后被更多的浏览器复制引用。它意味者调整布局视窗。为了明白为什么这个很有必要，我们先回到上一步。
+
+假如你构建一个简单的页面，同时对任何元素都不赋予宽度。现在他们保持伸展将布局视窗的百分百宽度作为自己的宽度。大部分浏览器会缩小整个布局视窗展现在屏幕上，会表现的如下：
+
+![](https://www.quirksmode.org/mobile/pix/viewport/mq_none.jpg)
+
+所有的用户立马就会去放大，这是有效的，但是大部分浏览器会完整的保持元素的宽度，这使文本阅读变得困难。
+
+![](https://www.quirksmode.org/mobile/pix/viewport/mq_none_zoomed.jpg)
+
+(有个特别的例外是Android WebKit，它竟然减少了文本容器元素的尺寸以便于文本去适应填充在屏幕里。这绝对是不能再机智了，而且我认为所有的浏览器都应该复制引用这种行为。稍后我会完整的描述该现象。)
+
+现在你可以能够尝试的是去设置 html {width: 320px}。现在 `<html>` 收缩了，同时也包含所有其他的元素，都把320像素作为百分百的宽度。当用户放大时也时这样的，但是一开始并不是这样的，当用户面对的是缩小的页面时，可能里面什么都没有。
+
+![](https://www.quirksmode.org/mobile/pix/viewport/mq_html300.jpg)
+
+这是为了追溯和解释为什么Apple要发明 meta viewport 整个标签。当你设置 `<meta name="viewport" content="width=320">` 的时候，你就设置布局视窗的宽度为320像素。好了，现在页面的初始状态也正确了。
+
+![](https://www.quirksmode.org/mobile/pix/viewport/mq_yes.jpg)
+
+你可以把布局视窗的宽度设置成任意你想要的尺寸，包括设备尺寸。最后一个会获取屏幕的宽度(设备像素级别)作为参考系，布局视窗会依照整个参考系进行调整。
+
+但是，这里有一个问题。有时候通常情况下屏幕的宽度并没有什么意义因为像素计数太高了。举个栗子，Nexus One 正式宽度为480像素，但是谷歌的工程师觉得480像素宽度的布局视窗在使用设备时实在太多了。于是他们削减到三分之二，所以实际上设备宽度时320像素，就和IPhone一样。
+
+假设，如果新的IPhone宣称他们将有更大的像素(这并不一定等于更大的屏幕！)，我并不会惊讶Apple复制了这种行为。可能最后设备的宽度依然是320像素。
+
+# 相关研究
+几个之后会进行研究的相关话题：
+
+* position: fixed. 如我们所知，一个固定的元素，相对于视窗进行定位。但是相对于哪一个视窗? 同时在做[这个研究](https://www.quirksmode.org/blog/archives/2010/12/the_fifth_posit.html)
+
+* Other media queries: dpi, orientation, aspect-ratio. DPI(Dots Per Inch，每英寸点数)是个祸害区域，不仅因为所有浏览器报告96dpi，这个通常都是假的，而且因为我也不能十分确定对于web开发者那些数值他们更感兴趣。
+
+* 当一个元素的宽度比布局视窗或者HTML元素更宽的时候发生了什么? 比如我把一个1500像素宽度的元素放到我的测试页面? 这个元素将会伸到HTML元素外面去([overflow](https://www.quirksmode.org/css/overflow.html): visible)，但是这以为着实际的视窗会变得比布局视窗更宽。另一种情况，老版本的Android(Nexus One)会扩大HTML元素。这会不会是一个好主义?
