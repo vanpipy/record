@@ -72,7 +72,7 @@
 ### 为什么是十分之一
 这个问题本质上或许可能是，如何把ui设计图完整的转换成对应的工程实现。涉及到的便是网格，应用的表现大概如同:
 
-![](https://www.w3cplus.com/sites/default/files/blogs/2015/1511/rem-2.jpg)
+![](https://raw.githubusercontent.com/vanpipy/record/master/HTMLandCSSandJS/rem-grid-min.jpg)
 
 可以看到的是，按照这种网格分割方式，需要选择一个黄金的分割比例! 就好像真正的黄金比例一样。当然在手机设备上不可能完全应用和[960 grid system](https://960.gs/)一样的设置。
 
