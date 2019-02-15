@@ -27,7 +27,7 @@ Android Browser, iPhone, Opera Mini and Opera Mobile, UC Browser等等.
 # 渲染流程
 主要的渲染流程可以这样形容:
 
-1. 解析 HTML, 并构建 DOM 数.
+1. 解析 HTML, 并构建 DOM 树.
 2. 构建渲染树.
 3. 渲染树的布局计算.
 4. 根据渲染树, 进行绘制.
@@ -57,6 +57,7 @@ Mozilla's Gecko rending engine main flow
 不可能为了一个很小的修改, 便每次重新计算所有的节点的尺寸和位置, Dirty bit 系统便为布局提供了预置判断.
 
 有两种标志:
+
 1. 它自己 dirty.
 2. 它的子节点 dirty.
 
