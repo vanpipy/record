@@ -17,15 +17,15 @@ Module loaders and bundlers, and they replace the a lots of `<script>` tag in HT
 * 插件系统十分强大，而且可以通过配置文件，能做的事情包含更多。
 
 ## Webpack 功能的增加
-主要通过两种方式增加webpack的功能
+主要通过两种方式增强webpack的功能
 
 1. Webpack Loaders
     - 是webpack构建过程的一个模块
     - 针对指定类型的文件, 依赖loader提供的纯函数进行转换操作(返回原始值也是一种转换).
 
 2. Webpack Plugins
-    - 主要可以弥补Loader不能做到的事情, 展现为webpack功能的扩展.
-    - 或者添加基于webpack的自定义功能.
+    - 可以补充Loader不能做到的事情, 展现为webpack功能的扩展.
+    - 通过添加自定义事件到webpack的构建过程中, 增强webpack的功能.
 
 * CommonJS 提供了在非浏览器环境中的开发规范，为了解决JavaScript的作用域问题，通过定义模块的形式，使每个模块的内容在自身的命名空间运行。`module.exports` 到处对外的变量，`require(...)`引入其他模块。
 * AMD 异步模块加载，主要为浏览器涉及的加载机制。
@@ -60,7 +60,7 @@ Webpack begins its work from entry\
 -> Evaluation Process, all loaders are found, webpack evaluates the matched loaders from bottom to top and right to left. Of course, Plugins do their work cause they allow you to intercept runtime events at different stages of the building process.
 -> Finishing, everything is ok without any errors, the webpack writes the result ***output*** as we wished. The output file include a bootstrap script with a manifest that describes how to begin executing the result in the browser.
 
-***Q***:
+***Q***: What is a loader in webpack?
 
 ***A***:
 
@@ -70,4 +70,5 @@ Webpack begins its work from entry\
 * [commonjs](https://requirejs.org/docs/commonjs.html)
 * [webpack 中文指南](https://zhaoda.net/webpack-handbook/module-system.html)
 * [ECMAScript® 2015 Language Specification](https://www.ecma-international.org/ecma-262/6.0/)
+* [spped-up-webpack](https://medium.com/onfido-tech/speed-up-webpack-ff53c494b89c)
 
