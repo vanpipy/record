@@ -63,12 +63,21 @@ Webpack begins its work from entry\
 ***Q***: What is a loader in webpack?
 
 ***A***:
+> Loaders allow you determine what should happen when webpack's module resolution mechanism encounters a file.\
+So the loader is a function that try to help webpack to transform the file encountered in the evaluation process and make the result matched as expected.
+
+***Q***: What is a plugin in webpack?
+
+***A***:
+> Compared to loaders, plugins are a more flexible means to extend webpack. You have access to webpack's compiler and compilation processes. It's possible to run child compilers, and plugins can work in tandem with loaders as `MiniCssExtractPlugin` shows.\
+
 
 # 参考
 * [what-is-webpack](https://survivejs.com/webpack/what-is-webpack/)
 * [webpack-interview-questions](https://github.com/styopdev/webpack-interview-questions/blob/master/answers.md)
 * [commonjs](https://requirejs.org/docs/commonjs.html)
-* [webpack 中文指南](https://zhaoda.net/webpack-handbook/module-system.html)
+* [webpack 中文指南 模块系统](https://zhaoda.net/webpack-handbook/module-system.html)
 * [ECMAScript® 2015 Language Specification](https://www.ecma-international.org/ecma-262/6.0/)
 * [spped-up-webpack](https://medium.com/onfido-tech/speed-up-webpack-ff53c494b89c)
+* [Module 的加载实现规则](http://es6.ruanyifeng.com/#docs/module-loader)
 
