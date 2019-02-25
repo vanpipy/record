@@ -1,6 +1,11 @@
 # What is React.js
 `React is open-source Javascript created by Facebook for building complex, interative UIs in web and mobile applications.`
 
+# Interview questions about react
+***Q***:
+
+***A***:
+
 ### React's Different
 React's core purpose is to build UI components; it is often referred to as just the "V"(View) in an "MVC" architecture.
 
