@@ -58,9 +58,9 @@ HTML 是一种标记语言, 全程为超文本标记语言, 最初是为了进�
 故所思所想, 务观其全, 而非一隅, 如此方可理解, 那些不能被了解的波澜壮阔.
 
 # Reference
-[HTML wiki](https://www.wikiwand.com/en/HTML)
-[SGML and HTML](https://www.w3.org/TR/html4/intro/sgmltut.html)
-[History of personal computer](https://www.wikiwand.com/en/History_of_personal_computers)
-[XML](https://www.wikiwand.com/en/XML)
-[我思故我在](https://www.wikiwand.com/zh-cn/%E6%88%91%E6%80%9D%E6%95%85%E6%88%91%E5%9C%A8)
+* [HTML wiki](https://www.wikiwand.com/en/HTML)
+* [SGML and HTML](https://www.w3.org/TR/html4/intro/sgmltut.html)
+* [History of personal computer](https://www.wikiwand.com/en/History_of_personal_computers)
+* [XML](https://www.wikiwand.com/en/XML)
+* [我思故我在](https://www.wikiwand.com/zh-cn/%E6%88%91%E6%80%9D%E6%95%85%E6%88%91%E5%9C%A8)
 
