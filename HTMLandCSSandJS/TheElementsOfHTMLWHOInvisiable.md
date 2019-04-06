@@ -11,18 +11,21 @@ HTML的世界, 在浏览器中进行展示, 总是尽如人意, 通常意义下�
 ## head 中包含了什么
 head 中可以包含很多内容, 但总的来讲, 可以将包含的内容称为, 提供文档元数据的元素集合.他们帮助应用识别文档, 按照一种预期的形式进行工作.
 
-* title
-title很简单, 就是提供一个文档的标题名称, 更多的是帮助你在搜索引擎的搜索结果里面得到一个简单准确的展现.
+* `<title></title>`
 
-* base
-base可以处理当前文档所有的相对超链接, 为他们设置一个基础的URI, 来进行相应的超链接跳转.
+    title很简单, 就是提供一个文档的标题名称, 更多的是帮助你在搜索引擎的搜索结果里面得到一个简单准确的展现.
+
+* `<base />`
+
+    base可以处理当前文档所有的相对超链接, 为他们设置一个基础的URI, 来进行相应的超链接跳转.
 
 ```
     <base href="http://www.my-blog-example.com/" target="_blank">
 ```
 
-* style
-style在head中以嵌入式的形式插入文档样式片段.
+* `<style></style>`
+
+    style在head中以嵌入式的形式插入文档样式片段.
 
 ```
     <style
@@ -35,8 +38,9 @@ style在head中以嵌入式的形式插入文档样式片段.
     </style>
 ```
 
-* script
-应用脚本片段或者引用脚本文件.
+* `<script></script>`
+
+    应用脚本片段或者引用脚本文件.
 
 ```
     <script type="text/javascript">
@@ -52,8 +56,9 @@ style在head中以嵌入式的形式插入文档样式片段.
     <script src="http://www.anothersite.com/funcs.js" referrerpolicy="unsafe-url"></script>
 ```
 
-* link
-link可以为文档提供相关的信息, 比如外联的样式文件或者其他类型的文件.
+* `<link />`
+
+    link可以为文档提供相关的信息, 比如外联的样式文件或者其他类型的文件.
 
 ```
     <link rel="license" href="copyright.html">
@@ -65,8 +70,9 @@ link可以为文档提供相关的信息, 比如外联的样式文件或者其�
     <link rel="icon" href="icon.ico" sizes="64x64 32x32 16x16">
 ```
 
-* meta
-把meta放到最后, 是因为meta可以提供其他元素表达不了的元数据, 即以上元素提供不了的元数据, 都可以考虑使用meta来进行补充.
+* `<meta />`
+
+    把meta放到最后, 是因为meta可以提供其他元素表达不了的元数据, 即以上元素提供不了的元数据, 都可以考虑使用meta来进行补充.
 
     而meta的应用方式, 可以分为三种.
 
