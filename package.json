@@ -19,8 +19,5 @@
   "bugs": {
     "url": "https://github.com/vanpipy/record/issues"
   },
-  "homepage": "https://github.com/vanpipy/record#readme",
-  "devDependencies": {
-    "jasmine": "^2.3.2"
-  }
+  "homepage": "https://github.com/vanpipy/record#readme"
 }
