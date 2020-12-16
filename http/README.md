@@ -41,9 +41,76 @@ One TCP connection and the HTTP connection reuses the TCP connection.
     - `Last-Modified: <day-name>, <day> <month> <year> <hour>:<minute>:<second> GMT` - The [Last-Modified](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Last-Modified) response header can be used as a weak validator.
 
 2. Relaxing the origin constraint
+> To prevent snooping and other privacy invasions, Web browsers enforce strict separation between Web sites. Only pages from the **same origin** can access all the information of a Web page. Though such constraint is a burden to the server, HTTP headers can relax this strict separation on the server side, allowing a document to become a patchwork of information sourced from different domains; there could even be security-related reasons to do so.
+
 3. Authentication
-4. Proxy and tunneling
+> Some pages may be protected so that only specific users can access them. Basic authentication may be provided by HTTP, either using the WWW-Authenticate and similar headers, or by setting a specific session using HTTP cookies.
+
+4. [Proxy and tunneling](https://developer.mozilla.org/en-US/docs/Web/HTTP/Proxy_servers_and_tunneling)
+> Servers or clients are often located on intranets and hide their true IP address from other computers. HTTP requests then go through proxies to cross this network barrier. Not all proxies are HTTP proxies. The SOCKS protocol, for example, operates at a lower level. Other protocols, like ftp, can be handled by these proxies.
+
 5. Sessions
+> Using HTTP cookies allows you to link requests with the state of the server. This creates sessions, despite basic HTTP being a state-less protocol. This is useful not only for e-commerce shopping baskets, but also for any site allowing user configuration of the output.
+
+The [HTTP cookie](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies) (web cookie, browser cookie) is a small piece of data that a server sends to the user's web browser.
+
+Cookies are mainly used for three purposes:
+
+* **Session management** - Logins, shopping carts, game scores, or anything else the server should remember
+* **Personalization** - User preferences, themes, and other settings
+* **Tracking** - Recording and analyzing user behavior
+
+After receiving an HTTP request, a server can send one or more [Set-Cookie](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie) headers with the response.
+
+Example:
+
+```
+// Set-Cookie: <cookie-name>=<cookie-value>
+
+// Response header
+
+HTTP/2.0 200 OK
+Content-Type: text/html
+Set-Cookie: yummy_cookie=choco
+Set-Cookie: tasty_cookie=strawberry
+
+// Request again - request header
+
+GET /sample_page.html HTTP/2.0
+Host: www.example.org
+Cookie: yummy_cookie=choco; tasty_cookie=strawberry
+```
+
+The lifetime of a cookie can be defined in two ways:
+
+* Session cookies are deleted when the current session ends. The browser defines when the "current session" ends, and some browsers use session restoring when restarting, which can cause session cookies to last indefinitely long.
+* Permanent cookies are deleted at a date specified by the Expires attribute, or after a period of time specified by the Max-Age attribute.
+
+Example:
+
+```
+Set-Cookie: id=a3fWa; Expires=Thu, 31 Oct 2021 07:28:00 GMT;
+```
+
+Restrict access to cookies
+
+There are a couple of ways to ensure that cookies are sent securely and are not accessed by unintended parties or scripts: the Secure attribute and the HttpOnly attribute.
+
+Example:
+
+```
+Set-Cookie: id=a3fWa; Expires=Thu, 21 Oct 2021 07:28:00 GMT; Secure; HttpOnly
+```
+
+Define where cookies are sent
+
+The Domain and Path attributes define the scope of the cookie: what URLs the cookies should be sent to.
+
+Example:
+
+```
+Set-Cookie: <cookie-name>=<cookie-value>; Domain=<domain-value>; Path=<path-value>
+```
 
 ## HTTP Methods
 
