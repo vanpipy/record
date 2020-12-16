@@ -25,16 +25,17 @@ One TCP connection and the HTTP connection reuses the TCP connection.
 
 ## HTTP Methods
 
-|name|Request has Body|Response has Body|Safe|Idempotent|Cacheable|
-|GET|Optional|Yes|Yes|Yes|Yes|
-|HEAD|Optional|No|Yes|Yes|Yes|
-|POST|Yes|Yes|No|No|Yes|
-|PUT|Yes|Yes|No|Yes|No|
-|DELETE|Optional|Yes|No|Yes|No|
-|CONNECT|Optional|Yes|No|No|No|
-|OPTIONS|Optional|Yes|Yes|Yes|No|
-|TRACE|No|Yes|Yes|Yes|No|
-|PATCH|Yes|Yes|No|No|No|
+| name    | Request has Body | Response has Body | Safe | Idempotent | Cacheable |
+| :------ | :--------------: | :---------------: | :--: | :---------:| --------: |
+| GET     | Optional         | Yes               | Yes  | Yes        | Yes       |
+| HEAD    | Optional         | No                | Yes  | Yes        | Yes       |
+| POST    | Yes              | Yes               | No   | No         | Yes       |
+| PUT     | Yes              | Yes               | No   | Yes        | No        |
+| DELETE  | Optional         | Yes               | No   | Yes        | No        |
+| CONNECT | Optional         | Yes               | No   | No         | No        |
+| OPTIONS | Optional         | Yes               | Yes  | Yes        | No        |
+| TRACE   | No               | Yes               | Yes  | Yes        | No        |
+| PATCH   | Yes              | Yes               | No   | No         | No        |
 
 ## HTTP Status Code
 
